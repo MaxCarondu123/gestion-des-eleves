@@ -4,7 +4,7 @@
         <!--Barre de navigation-->
         <div class="flex justify-center items-center bg-indigo-100 w-72">
             <div>
-                <h1 class="flex justify-center font-bold text-lg mb-2">Actions</h1>
+                <h1 class="flex justify-center font-bold text-lg mb-2">Action</h1>
                 <div class="flex justify-around">
                     <button class="flex justify-center py-2 mb-6 w-full bg-sky-200 rounded-3xl border-2 border-black"><a href="">Courante</a></button>
                     <button class="flex justify-center py-2 mb-6 w-full bg-sky-50 rounded-3xl"><a href="">Annuelle</a></button>
