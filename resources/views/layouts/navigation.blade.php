@@ -22,6 +22,10 @@
                 <button class="flex justify-center py-2 mb-6 w-full bg-sky-50 rounded-3xl"><a href="elevesgroupes">Gestion des eleves par groupes</a></button> 
                 <button class="flex justify-center py-2 mb-6 w-full bg-sky-200 rounded-3xl border-2 border-black"><a href="periodes">Gestion des periodes</a></button>--> 
 
-                <button class="flex justify-center py-2 mb-6 w-full bg-red-200 rounded-3xl"><a href="">Se deconnecter</a></button>  
+                <button class="flex justify-center py-2 mb-6 w-full bg-red-200 rounded-3xl"><a href="deconnecter">Se deconnecter</a></button>
+                <h1>{{Route::currentRouteName()}}</h1>  
+                @if(Route::currentRouteName() == 'absences')
+                    <button class="flex justify-center py-2 mb-6 w-full bg-sky-50 rounded-3xl"><a href="examenstravaux">Gestion des examens ou travaux</a></button>
+                @endif
             </div>
         </div>

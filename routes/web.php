@@ -6,8 +6,12 @@ use App\Http\Controllers\connexion;
 // Connexion
 Route::get('/connexion', [connexion::class, 'login']);
 Route::get('/inscription', [connexion::class, 'register']);
+Route::get('/mdpoublier', [connexion::class, 'mdpOublier']);
 Route::post('/connexion-utilisateur', [connexion::class, 'connexionUtilisateur'])->name('connexion-utilisateur');
 Route::post('/inscription-utilisateur', [connexion::class, 'inscriptionUtilisateur'])->name('inscription-utilisateur');
+Route::get('/deconnecter', [connexion::class, 'deconnecter']);
+Route::get('/envoyer-email', [connexion::class, 'envoyerEmail']);
+Route::post('/changer-mdp', [connexion::class, 'changerMdp'])->name('changer-mdp');
 
 //----------- Courante -----------
 // Accueil
@@ -50,3 +54,4 @@ Route::get('/elevesgroupes', function () {
 Route::get('/periodes', function () {
     return view('periodes');
 });
+
