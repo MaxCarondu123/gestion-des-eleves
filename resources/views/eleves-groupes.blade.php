@@ -1,11 +1,6 @@
 @include('layouts.head')
 @include('layouts.navigation')
-
-    <div class="flex flex-col w-full">
-        <!--Menu en haut-->
-        <div class="flex justify-between bg-gray-200 h-2/12 p-10 ">
-            <h1 class="font-bold text-xl">Test</h1>
-        </div>      
+@include('layouts.menu')    
     
         <!--Contenue des tables-->
         <div class="flex w-full h-1/2 bg-gray-500">

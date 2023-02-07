@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\connexion;
+use App\Http\Controllers\SessionController;
 
 // Connexion
 Route::get('/connexion', [connexion::class, 'login']);
@@ -36,9 +37,7 @@ Route::get('/examenstravaux', function () {
 
 //----------- Annuelle -----------
 // Sessions
-Route::get('/sessions', function () {
-    return view('sessions');
-});
+Route::get('/sessions', [SessionController::class, 'chercherDonnees']);
 
 // Groupes par sessions
 Route::get('/groupessessions', function () {
