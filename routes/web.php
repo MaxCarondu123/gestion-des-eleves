@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\connexion;
+use App\Http\Controllers\ConnexionController;
 use App\Http\Controllers\SessionController;
 
 // Connexion
-Route::get('/connexion', [connexion::class, 'login']);
-Route::get('/inscription', [connexion::class, 'register']);
-Route::get('/mdpoublier', [connexion::class, 'mdpOublier']);
-Route::post('/connexion-utilisateur', [connexion::class, 'connexionUtilisateur'])->name('connexion-utilisateur');
-Route::post('/inscription-utilisateur', [connexion::class, 'inscriptionUtilisateur'])->name('inscription-utilisateur');
-Route::get('/deconnecter', [connexion::class, 'deconnecter']);
-Route::get('/envoyer-email', [connexion::class, 'envoyerEmail']);
-Route::post('/changer-mdp', [connexion::class, 'changerMdp'])->name('changer-mdp');
+Route::get('/connexion', [ConnexionController::class, 'login']);
+Route::get('/inscription', [ConnexionController::class, 'register']);
+Route::get('/mdpoublier', [ConnexionController::class, 'mdpOublier']);
+Route::post('/connexion-utilisateur', [ConnexionController::class, 'connexionUtilisateur'])->name('connexion-utilisateur');
+Route::post('/inscription-utilisateur', [ConnexionController::class, 'inscriptionUtilisateur'])->name('inscription-utilisateur');
+Route::get('/deconnecter', [ConnexionController::class, 'deconnecter']);
+Route::get('/envoyer-email', [ConnexionController::class, 'envoyerEmail']);
+Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('changer-mdp');
 
 //----------- Courante -----------
 // Accueil
@@ -38,6 +38,8 @@ Route::get('/examenstravaux', function () {
 //----------- Annuelle -----------
 // Sessions
 Route::get('/sessions', [SessionController::class, 'chercherDonnees']);
+Route::post('/sessions-ajout', [SessionController::class, 'ajoutDonnees'])->name('sessions-ajout');
+Route::post('/testtest', [ConnexionController::class, 'test'])->name('testtest');
 
 // Groupes par sessions
 Route::get('/groupessessions', function () {

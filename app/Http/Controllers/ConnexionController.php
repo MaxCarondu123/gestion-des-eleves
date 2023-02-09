@@ -11,8 +11,11 @@ use App\Mail\MdpOublierMail;
 use resources\views\emails\test;
 
 
-class connexion extends Controller
+class ConnexionController extends Controller
 {
+    public function test(Request $request){
+        echo "test1";
+    }
     public function login()
     {
         return view("connexion");
@@ -121,7 +124,7 @@ class connexion extends Controller
             $request->session()->put('email', $utilisateur->user_id);
 
             //Envoyer le email
-            Mail::to('test@gmail.com')->send(new MdpOublierMail());
+            Mail::to($utilisateur->user_email)->send(new MdpOublierMail());
 
             //Aller a la page changer le mot de passe
             return view("mdp-oublier-code");

@@ -5,7 +5,7 @@
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/absences') Absences
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/notes') Notes
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/examenstravaux') Examens et Travaux
-                                      @elseif(URL::current() == 'http://127.0.0.1:8000/sessions') Sessions
+                                      @elseif(URL::current() == 'http://127.0.0.1:8000/sessions' || url()->current() == 'http://127.0.0.1:8000/sessions/ajout') Sessions
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/groupessessions') Groupes par sessions
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/elevesgroupes') Eleves par groupes
                                       @elseif(URL::current() == 'http://127.0.0.1:8000/periodes') Periodes

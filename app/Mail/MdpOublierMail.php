@@ -32,8 +32,8 @@ class MdpOublierMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('test@test.ca', 'Moi'),
-            subject: 'Mdp Oublier Mail'
+            from: new Address('mdpoublier@gmail.ca', 'Code'),
+            subject: 'Mot de passe oublier'
         );
     }
 
