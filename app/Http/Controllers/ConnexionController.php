@@ -13,9 +13,6 @@ use resources\views\emails\test;
 
 class ConnexionController extends Controller
 {
-    public function test(Request $request){
-        echo "test1";
-    }
     public function login()
     {
         return view("connexion");

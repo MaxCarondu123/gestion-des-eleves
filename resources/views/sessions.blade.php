@@ -8,6 +8,7 @@
             <h1 class="font-bold text-2xl">Table des sessions</h1>
         </div>
 
+        
         <div class="h-full p-12">
             <table class="w-full">
                 <thead class="bg-blue-400 border-2 border-slate-700">
@@ -23,29 +24,40 @@
 
                 <tbody class="">
                     @foreach ($sessions as $session)
-                        <tr class="bg-zinc-300">
-                            <th class="border-2 border-slate-700">{{$session->sess_id}}</th>
-                            <th class="border-2 border-slate-700">{{$session->sess_num}}</th>
-                            <th class="border-2 border-slate-700">{{$session->sess_startdate}}</th>
-                            <th class="border-2 border-slate-700">{{$session->sess_enddate}}</th>
+                        <tr class="@if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                            <th class="border-2 border-slate-700"><input class="w-24 text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$session->sess_id}}"></th>
+                            <th class="border-2 border-slate-700"><input class="w-24 text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$session->sess_num}}"></th>
+                            <th class="border-2 border-slate-700"><input class="text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="date" value="{{$session->sess_startdate}}"></th>
+                            <th class="border-2 border-slate-700"><input class="text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="date" value="{{$session->sess_enddate}}"></th>
                             <th class="border-2 border-slate-700">@if($session->sess_current == 1) <i class="fa-sharp fa-solid fa-xmark"></i> @endif</th>
-                            <th class="border-2 border-slate-700"><i class="fa-solid fa-trash-can"></i></th>
+                            <th class="border-2 border-slate-700"><a href=""><i class="fa-solid fa-trash-can"></i></a></th>
                         </tr>
-                    @endforeach
-                    @if(Session::has('nbrsessions'))
-                        @for ($i = Session::get('nbrsessionsbd'); $i <= Session::get('nbrsessions'); $i++)
-                            <tr class="bg-zinc-300">
-                                <th class="border-2 border-slate-700">{{$i}}</th>
-                                <th class="border-2 border-slate-700"><input class="text-center bg-zinc-300" type="text"></th>
-                                <th class="border-2 border-slate-700"><input class="text-center bg-zinc-300" type="text"></th>
-                                <th class="border-2 border-slate-700"><input class="text-center bg-zinc-300" type="text"></th>
-                                <th class="border-2 border-slate-700"><input class="text-center bg-zinc-300" type="text"></th>
-                                <th class="border-2 border-slate-700"><i class="fa-solid fa-trash-can"></i></th>
-                            </tr>
-                        @endfor
-                    @endif         
+                    @endforeach     
+                    <form action="{{route('sessions-save')}}" method="post" id="formEnregistrer">  
+                        @csrf         
+                        @if(Session::has('nbrsessionsvide'))
+                            @for ($i = Session::get('nbrsessionsbd'); $i <= Session::get('nbrsessionsvide'); $i++)                            
+                                <tr class=" bg-red-200">
+                                    <th class="border-2 border-slate-700">{{$i}}</th>
+                                    <th class="border-2 border-slate-700"> <select class="text-center bg-red-200" type="text" name="etape">
+                                                                                <option value="1">1</option>
+                                                                                <option value="2">2</option>
+                                                                                <option value="3">3</option>
+                                                                            </select></th>
+                                    <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="date" name="datedebut"></th>
+                                    <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="date" name="datefin"></th>
+                                    <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="checkbox" name="courante"></th>
+                                    <th class="border-2 border-slate-700"><a href=""><i class="fa-solid fa-trash-can"></i></a></th>
+                                </tr>                  
+                            @endfor
+                        @endif
+                    </form>                         
                 </tbody>
             </table>
+            <span class="text-red-500">@error('etape') {{$message}} @enderror</span><br>
+            <span class="text-red-500">@error('datedebut') {{$message}} @enderror</span><br>
+            <span class="text-red-500">@error('datefin') {{$message}} @enderror</span>
+                            
         </div>
     </div>
 
@@ -58,16 +70,10 @@
                     <option class="text-center" value="">{{$session->sess_id}}</option>
                 @endforeach
             </select>
-            <div class="border-2 border-black mb-6"></div>
-            <form action="{{route('testtest')}}" method="post">
-                @csrf
-                <input class="w-full py-1 mb-2 bg-neutral-200" type="password" name="password">
-                <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="sumbit">Ajouter</button>
-            </form>
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl"><a href="sessionssave">Enregistrer</a></button>
-            <!--<form action="//route('sessions')}}" method="get">
-                <button class="py-2 mb-6 w-full bg-red-300 rounded-3xl" type="sumbit">Annuler</button>
-            </form>-->
+            <div class="border-2 border-black mb-6"></div>         
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl @if(Session::get('btnenregistrer') == 1) opacity-75" disabled @else " @endif type="submit" form="formEnregistrer">Enregistrer</button>        
+            <a href="{{route('sessions-ajout')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter</button></a>  
+            <a href="{{route('sessions-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
         </div>      
     </div>
 </div>

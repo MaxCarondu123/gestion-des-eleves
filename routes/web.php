@@ -38,8 +38,9 @@ Route::get('/examenstravaux', function () {
 //----------- Annuelle -----------
 // Sessions
 Route::get('/sessions', [SessionController::class, 'chercherDonnees']);
-Route::post('/sessions-ajout', [SessionController::class, 'ajoutDonnees'])->name('sessions-ajout');
-Route::post('/testtest', [ConnexionController::class, 'test'])->name('testtest');
+Route::get('/sessions-ajout', [SessionController::class, 'ajoutDonnees'])->name('sessions-ajout');
+Route::post('/sessions-save', [SessionController::class, 'sauvegarderDonnees'])->name('sessions-save');
+Route::get('/sessions-annuler', [SessionController::class, 'annuler'])->name('sessions-annuler');
 
 // Groupes par sessions
 Route::get('/groupessessions', function () {
