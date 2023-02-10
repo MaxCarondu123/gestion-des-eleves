@@ -68,6 +68,13 @@ class SessionController extends Controller
         $session->sess_enddate = $request->datefin;
         if($request->courante == 'on'){
             $courante = true;
+
+            //Verifier si une session courante
+            $sessionCourante = sessions::where('sess_current', '=', true)->first();
+            if($sessionCourante){
+                //Enlever la session qui etait courante
+                sessions::where('sess_id', '=', $sessionCourante->sess_id)->update(['sess_current' => false]);
+            }
         }else{
             $courante = false;
         }
@@ -87,6 +94,32 @@ class SessionController extends Controller
         //Desactiver bouton enregistrer
         $btnEnregistrer = true;
         session(['btnenregistrer' => $btnEnregistrer]);
+
+        //Retourne vue session
+        return redirect('sessions');  
+    }
+
+    public function supprimer($sessId){
+        //Valider que la session existe
+        $session = sessions::where('sess_id', '=' ,$sessId)->first();
+        if($session){
+            sessions::where('sess_id', '=' ,$sessId)->delete();
+
+            //Retourne vue session
+            return redirect('sessions');  
+        }
+    }
+
+    public function changecourante($sessId){
+        //Verifier qui a une sessions courante
+        $session = sessions::where('sess_current', '=', true)->first();
+        if($session){
+            //Enlever la session qui etait courante
+            sessions::where('sess_id', '=', $session->sess_id)->update(['sess_current' => false]);
+        }
+
+        //mettre la nouvelle session courante
+        sessions::where('sess_id', '=', $sessId)->update(['sess_current' => true]);
 
         //Retourne vue session
         return redirect('sessions');  

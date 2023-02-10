@@ -9,7 +9,7 @@
         </div>
 
         
-        <div class="h-full p-12">
+        <div class="h-full px-16 pt-4">
             <table class="w-full">
                 <thead class="bg-blue-400 border-2 border-slate-700">
                     <tr class="">
@@ -30,7 +30,7 @@
                             <th class="border-2 border-slate-700"><input class="text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="date" value="{{$session->sess_startdate}}"></th>
                             <th class="border-2 border-slate-700"><input class="text-center @if($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="date" value="{{$session->sess_enddate}}"></th>
                             <th class="border-2 border-slate-700">@if($session->sess_current == 1) <i class="fa-sharp fa-solid fa-xmark"></i> @endif</th>
-                            <th class="border-2 border-slate-700"><a href=""><i class="fa-solid fa-trash-can"></i></a></th>
+                            <th class="border-2 border-slate-700"><a href="{{route('sessions-supp', ['sessid'=>$session->sess_id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
                         </tr>
                     @endforeach     
                     <form action="{{route('sessions-save')}}" method="post" id="formEnregistrer">  
@@ -54,10 +54,8 @@
                     </form>                         
                 </tbody>
             </table>
-            <span class="text-red-500">@error('etape') {{$message}} @enderror</span><br>
-            <span class="text-red-500">@error('datedebut') {{$message}} @enderror</span><br>
-            <span class="text-red-500">@error('datefin') {{$message}} @enderror</span>
-                            
+            <span class="text-red-500">@error('datedebut')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span><br>
+            <span class="text-red-500">@error('datefin')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span>                         
         </div>
     </div>
 
@@ -65,9 +63,9 @@
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
             <label class="flex justify-center rounded-3xl" for="">Etape courante:</label>
-            <select class="py-2 mb-6 w-full rounded-3xl" name="" id="">               
+            <select class="py-2 mb-6 w-full rounded-3xl" onchange="location = this.value;">               
                 @foreach ($sessions as $session)
-                    <option class="text-center" value="">{{$session->sess_id}}</option>
+                    <option class="text-center" value="{{route('sessions-changecourante', ['sessid'=>$session->sess_id])}}" @if($session->sess_current == true) selected @endif>{{$session->sess_id}}</option>
                 @endforeach
             </select>
             <div class="border-2 border-black mb-6"></div>         

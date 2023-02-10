@@ -41,6 +41,8 @@ Route::get('/sessions', [SessionController::class, 'chercherDonnees']);
 Route::get('/sessions-ajout', [SessionController::class, 'ajoutDonnees'])->name('sessions-ajout');
 Route::post('/sessions-save', [SessionController::class, 'sauvegarderDonnees'])->name('sessions-save');
 Route::get('/sessions-annuler', [SessionController::class, 'annuler'])->name('sessions-annuler');
+Route::get('/sessions-supp/{sessid}', [SessionController::class, 'supprimer'])->name('sessions-supp');
+Route::get('/sessions-changecourante/{sessid}', [SessionController::class, 'changecourante'])->name('sessions-changecourante');
 
 // Groupes par sessions
 Route::get('/groupessessions', function () {
