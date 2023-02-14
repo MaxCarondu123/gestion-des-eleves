@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConnexionController;
+use App\Http\Controllers\GroupesSessionsController;
 use App\Http\Controllers\SessionController;
 
 // Connexion
@@ -45,9 +46,12 @@ Route::get('/sessions-supp/{sessid}', [SessionController::class, 'supprimer'])->
 Route::get('/sessions-changecourante/{sessid}', [SessionController::class, 'changecourante'])->name('sessions-changecourante');
 
 // Groupes par sessions
-Route::get('/groupessessions', function () {
-    return view('groupes-sessions');
-});
+Route::get('/groupessessions', [GroupesSessionsController::class, 'chercherDonnes']);
+Route::get('/groupessessions-ajout', [GroupesSessionsController::class, 'ajoutDonnees'])->name('groupessessions-ajout');
+Route::get('/groupessessions-annuler', [GroupesSessionsController::class, 'annuler'])->name('groupessessions-annuler');
+Route::get('/groupessessions-selectsessionsrow/{sessid}', [GroupesSessionsController::class, 'selectSessionsRow'])->name('groupessessions-selectsessionsrow');
+Route::get('/groupessessions-selectgroupmatrow/{groupmatid}', [GroupesSessionsController::class, 'selectGroupMatRow'])->name('groupessessions-selectgroupmatrow');
+
 
 // Eleves par groupes
 Route::get('/elevesgroupes', function () {

@@ -37,7 +37,7 @@
                         @csrf         
                         @if(Session::has('nbrsessionsvide'))
                             @for ($i = Session::get('nbrsessionsbd'); $i <= Session::get('nbrsessionsvide'); $i++)                            
-                                <tr class=" bg-red-200">
+                                <tr class="bg-red-200">
                                     <th class="border-2 border-slate-700">{{$i}}</th>
                                     <th class="border-2 border-slate-700"> <select class="text-center bg-red-200" type="text" name="etape">
                                                                                 <option value="1">1</option>
