@@ -50,7 +50,7 @@ class ConnexionController extends Controller
             if(Hash::check($request->password, $utilisateur->user_password)){
 
                 //Mettre l'utilisateur dans la session
-                $request->session()->put('connexion', $utilisateur->user_id);
+                session(['connexion' => $utilisateur->user_id]);
                 
                 //Allez a l'accueil
                 return redirect('accueil');
@@ -88,7 +88,7 @@ class ConnexionController extends Controller
             $utilisateur = new utilisateurs();
             $utilisateur->user_name= $request->name;
             $utilisateur->user_email= $request->email;
-            $utilisateur->user_password = Hash::make($request->password);
+            $utilisateur->user_password = Hash::make($request->password1);
 
             //Requete sql pour entrer les informations
             $res = $utilisateur->save();

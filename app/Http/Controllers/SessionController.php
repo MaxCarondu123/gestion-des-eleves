@@ -6,11 +6,11 @@ use App\Models\sessions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Exists;
+use App\Http\Controllers\CommunController;
 
 class SessionController extends Controller
 {
     public function chercherDonnees(Request $request){
-        //Requete pour aller chercher les sessions
         $sessions = DB::table('sessions')->get();
         
         //session()->flush('nbrsessions');
@@ -60,7 +60,7 @@ class SessionController extends Controller
             'datedebut.required' => "Veuillez entrer une date de debut",
             'datefin.required' => "Veuillez entrer une date de fin"
         ]);
-        
+
         //Chercher les infos de l'utilisteurs
         $session = new sessions();
         $session->sess_num = $request->etape;

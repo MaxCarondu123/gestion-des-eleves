@@ -48,6 +48,7 @@ Route::get('/sessions-changecourante/{sessid}', [SessionController::class, 'chan
 // Groupes par sessions
 Route::get('/groupessessions', [GroupesSessionsController::class, 'chercherDonnes']);
 Route::get('/groupessessions-ajout', [GroupesSessionsController::class, 'ajoutDonnees'])->name('groupessessions-ajout');
+Route::post('/groupessessions-save', [GroupesSessionsController::class, 'sauvegarderDonnees'])->name('groupessessions-save');
 Route::get('/groupessessions-annuler', [GroupesSessionsController::class, 'annuler'])->name('groupessessions-annuler');
 Route::get('/groupessessions-selectsessionsrow/{sessid}', [GroupesSessionsController::class, 'selectSessionsRow'])->name('groupessessions-selectsessionsrow');
 Route::get('/groupessessions-selectgroupmatrow/{groupmatid}', [GroupesSessionsController::class, 'selectGroupMatRow'])->name('groupessessions-selectgroupmatrow');

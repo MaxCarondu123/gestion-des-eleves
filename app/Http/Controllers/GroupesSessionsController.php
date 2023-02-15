@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\groupes_matieres;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -81,5 +82,24 @@ class GroupesSessionsController extends Controller
 
         //Retourne vue session
         return redirect('groupessessions');  
+    }
+
+    public function sauvegarderDonnees(Request $request){
+        //Valider les champs
+
+
+        //Chercher les infos de l'utilisteurs
+        $grMat = new groupes_matieres();
+        $grMat->groupmat_mat = $request->matiere;
+        $grMat->groupmat_name= $request->nom;
+        $grMat->groupmat_num = $request->numero;
+        $grMat->groupmat_description = $request->description;
+        $grMat->user_id = session('connexion');
+
+        //Requete sql pour entrer les informations
+        $res = $grMat->save();
+
+        //Retourner a annuler
+        return self::annuler();
     }
 }
