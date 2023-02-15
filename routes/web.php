@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConnexionController;
 use App\Http\Controllers\GroupesSessionsController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\ElevesGroupesController;
+use App\Http\Controllers\CommunController;
+use App\Http\Controllers\AccueilController;
 
 // Connexion
 Route::get('/connexion', [ConnexionController::class, 'login']);
@@ -17,9 +20,7 @@ Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('c
 
 //----------- Courante -----------
 // Accueil
-Route::get('/accueil', function () {
-    return view('accueil');
-});
+Route::get('/accueil', [CommunController::class, 'read']);
 
 // Absences
 Route::get('/absences', function () {
@@ -38,9 +39,9 @@ Route::get('/examenstravaux', function () {
 
 //----------- Annuelle -----------
 // Sessions
-Route::get('/sessions', [SessionController::class, 'chercherDonnees']);
-Route::get('/sessions-ajout', [SessionController::class, 'ajoutDonnees'])->name('sessions-ajout');
-Route::post('/sessions-save', [SessionController::class, 'sauvegarderDonnees'])->name('sessions-save');
+Route::get('/sessions', [SessionController::class, 'read']);
+Route::get('/sessions-ajout', [SessionController::class, 'add'])->name('sessions-ajout');
+Route::post('/sessions-save', [SessionController::class, 'save'])->name('sessions-save');
 Route::get('/sessions-annuler', [SessionController::class, 'annuler'])->name('sessions-annuler');
 Route::get('/sessions-supp/{sessid}', [SessionController::class, 'supprimer'])->name('sessions-supp');
 Route::get('/sessions-changecourante/{sessid}', [SessionController::class, 'changecourante'])->name('sessions-changecourante');
@@ -52,12 +53,12 @@ Route::post('/groupessessions-save', [GroupesSessionsController::class, 'sauvega
 Route::get('/groupessessions-annuler', [GroupesSessionsController::class, 'annuler'])->name('groupessessions-annuler');
 Route::get('/groupessessions-selectsessionsrow/{sessid}', [GroupesSessionsController::class, 'selectSessionsRow'])->name('groupessessions-selectsessionsrow');
 Route::get('/groupessessions-selectgroupmatrow/{groupmatid}', [GroupesSessionsController::class, 'selectGroupMatRow'])->name('groupessessions-selectgroupmatrow');
-
+Route::get('/groupessessions-ajouterGroupSess', [GroupesSessionsController::class, 'ajouterGroupSess'])->name('groupessessions-ajouterGroupSess');
+Route::get('/groupessessions-groupmatsupp/{groupmatid}', [GroupesSessionsController::class, 'groupMatSupp'])->name('groupessessions-groupmatsupp');
+Route::get('/groupessessions-groupsesssupp/{groupsessid}', [GroupesSessionsController::class, 'groupSessSupp'])->name('groupessessions-groupsesssupp');
 
 // Eleves par groupes
-Route::get('/elevesgroupes', function () {
-    return view('eleves-groupes');
-});
+Route::get('/elevesgroupes', [ElevesGroupesController::class, 'chercherDonnes']);
 
 // Periodes
 Route::get('/periodes', function () {

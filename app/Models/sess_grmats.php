@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class sess_grmat extends Model
+class sess_grmats extends Model
 {
     use HasFactory;
     public $timestamps = false;

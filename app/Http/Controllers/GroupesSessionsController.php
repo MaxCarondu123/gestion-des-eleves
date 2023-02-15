@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\groupes_matieres;
+use App\Models\sess_grmats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ class GroupesSessionsController extends Controller
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
         //Requete pour aller chercher les groupes par sessions
-        $sess_grmats = DB::table('sess_grmat')->get();
+        $sess_grmats = DB::table('sess_grmats')->get();
         //Requete pour aller chercher les sessions
         $sessions = DB::table('sessions')->get();
         
@@ -42,10 +43,10 @@ class GroupesSessionsController extends Controller
 
         $nbrGroupMatVide = $nbrGroupMatBD;
 
-        if(session()->exists('nbrgroupmatvide')){
-            $nbrGroupMatVide = session()->get('nbrgroupmatvide');
-            $nbrGroupMatVide++;
-        }
+        //if(session()->exists('nbrgroupmatvide')){
+            //$nbrGroupMatVide = session()->get('nbrgroupmatvide');
+            //$nbrGroupMatVide++;
+        //}
 
         session(['nbrgroupmatvide' => $nbrGroupMatVide]);
         session(['nbrgroupmatbd' => $nbrGroupMatBD]);
@@ -86,7 +87,16 @@ class GroupesSessionsController extends Controller
 
     public function sauvegarderDonnees(Request $request){
         //Valider les champs
-
+        $request->validate([
+            'matiere' => 'required|alpha:ascii',
+            'nom' => 'required',
+            'numero' => 'required',
+        ],[
+            'matiere.required' => 'Veuillez entrer une matiere',
+            'matiere.alpha' => 'Veuillez entrer des lettres',
+            'nom.required' => 'Veuillez entrer un nom',
+            'numero.required' => 'Veuillez entrer un numero'
+        ]);
 
         //Chercher les infos de l'utilisteurs
         $grMat = new groupes_matieres();
@@ -101,5 +111,38 @@ class GroupesSessionsController extends Controller
 
         //Retourner a annuler
         return self::annuler();
+    }
+
+    public function ajouterGroupSess(){
+        $sessGrMat = new sess_grmats();
+        $sessGrMat->sess_id = session('sessionsrowselect');
+        $sessGrMat->groupmat_id = session('groupmatrowselect');
+
+        $res = $sessGrMat->save();
+
+        //Retourne vue session
+        return redirect('groupessessions');
+    }
+
+    public function groupMatSupp($groupMatId){
+        //Valider que la session existe
+        $groupMat = groupes_matieres::where('groupmat_id', '=' ,$groupMatId)->first();
+        if($groupMat){
+            groupes_matieres::where('groupmat_id', '=' ,$groupMatId)->delete();
+
+            //Retourne vue session
+            return redirect('groupessessions');  
+        }
+    }
+
+    public function groupSessSupp($groupSessId){
+        //Valider que la session existe
+        $groupSess = sess_grmats::where('sess_grmat_id', '=' ,$groupSessId)->first();
+        if($groupSess){
+            sess_grmats::where('sess_grmat_id', '=' ,$groupSessId)->delete();
+
+            //Retourne vue session
+            return redirect('groupessessions');  
+        }
     }
 }

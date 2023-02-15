@@ -125,4 +125,88 @@ class SessionController extends Controller
         return redirect('sessions');  
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+    public function create(){
+
+    }
+
+    public function update(){
+        
+    }
+
+    public function read(){
+        $sessions = DB::table('sessions')->get();
+
+        //print_r(Schema::getColumnListing('sessions'));
+
+        return view('sessions', ['sessions' => $sessions]);
+    }
+
+    public function delete(){
+        
+    }
+
+    public function save(Request $request){
+        //Valider les champs
+        $request->validate([
+            'etape' => 'required',
+            'datedebut' => 'required',
+            'datefin' => 'required'
+        ],[
+            'etape.required' => "Veuillez entrer une etape",
+            'datedebut.required' => "Veuillez entrer une date de debut",
+            'datefin.required' => "Veuillez entrer une date de fin"
+        ]);
+
+        //Chercher les infos de l'utilisteurs
+        $session = new sessions();
+        $session->sess_num = $request->etape;
+        $session->sess_startdate = $request->datedebut;
+        $session->sess_enddate = $request->datefin;
+        if($request->courante == 'on'){
+            $courante = true;
+
+            //Verifier si une session courante
+            $sessionCourante = sessions::where('sess_current', '=', true)->first();
+            if($sessionCourante){
+                //Enlever la session qui etait courante
+                sessions::where('sess_id', '=', $sessionCourante->sess_id)->update(['sess_current' => false]);
+            }
+        }else{
+            $courante = false;
+        }
+        $session->sess_current = $courante;
+
+        //Requete sql pour entrer les informations
+        $res = $session->save();
+
+        //Retourner a annuler
+        return self::annuler();
+    }
+
+    public function add(){
+        //Requete aller chercher le nombre de sessions
+        $sessionHaute = DB::table('sessions')->orderBy('id', 'desc')->first();
+        $nbrSessionsBD  = $sessionHaute->id + 1;
+
+        $nbrSessionsVide = $nbrSessionsBD;
+
+        session(['nbrsessionsvide' => $nbrSessionsVide]);
+        session(['nbrsessionsbd' => $nbrSessionsBD]);
+
+        //Retourne vue session
+        return redirect('sessions');  
+    }
+
 }

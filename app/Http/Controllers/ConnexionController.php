@@ -38,9 +38,9 @@ class ConnexionController extends Controller
             'email'=>'required|email',
             'password'=>'required'
         ],[
-            'email.required'=>"L'adresse courriel est vide",
-            'email.email'=>"L'adresse courriel n'est pas valide",
-            'password.required'=>'Le mot de passe est vide'
+            'email.required' => "L'adresse courriel est vide",
+            'email.email' => "L'adresse courriel n'est pas valide",
+            'password.required' => 'Le mot de passe est vide'
         ]);
         
         //Verifier si l'utilisteur existe
