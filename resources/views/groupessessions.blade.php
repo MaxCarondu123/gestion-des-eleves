@@ -131,13 +131,13 @@
                             </thead>
                             <tbody>
                                 @foreach ($sessions as $session)
-                                    <tr class="@if(Session::get('sessionsrowselect') == $session->sess_id) bg-amber-300 @elseif($session->sess_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                                        <th class="border-2 border-slate-700">{{$session->sess_id}}</th>
+                                    <tr class="@if(Session::get('sessionsrowselect') == $session->id) bg-amber-300 @elseif($session->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                        <th class="border-2 border-slate-700">{{$session->id}}</th>
                                         <th class="border-2 border-slate-700">{{$session->sess_num}}</th>
                                         <th class="border-2 border-slate-700">{{$session->sess_startdate}}</th>
                                         <th class="border-2 border-slate-700">{{$session->sess_enddate}}</th>
                                         <th class="border-2 border-slate-700">@if($session->sess_current == 1) <i class="fa-sharp fa-solid fa-xmark"></i> @endif</th>
-                                        <th class="border-2 border-slate-700"><a href="{{route('groupessessions-selectsessionsrow', ['sessid'=>$session->sess_id])}}"><i class="fa-solid fa-square-check"></i></a></th>
+                                        <th class="border-2 border-slate-700"><a href="{{route('groupessessions-selectsessionsrow', ['sessid'=>$session->id])}}"><i class="fa-solid fa-square-check"></i></a></th>
                                     </tr>
                                 @endforeach 
                             </tbody>

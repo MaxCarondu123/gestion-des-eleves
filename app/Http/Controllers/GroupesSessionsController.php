@@ -115,7 +115,7 @@ class GroupesSessionsController extends Controller
 
     public function ajouterGroupSess(){
         $sessGrMat = new sess_grmats();
-        $sessGrMat->sess_id = session('sessionsrowselect');
+        $sessGrMat->id = session('sessionsrowselect');
         $sessGrMat->groupmat_id = session('groupmatrowselect');
 
         $res = $sessGrMat->save();

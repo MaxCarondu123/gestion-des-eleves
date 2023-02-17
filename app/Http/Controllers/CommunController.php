@@ -31,4 +31,8 @@ class CommunController extends Controller
     public function save(){
         
     }
+
+    public function cancel(){
+        
+    }
 }

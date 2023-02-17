@@ -12,46 +12,7 @@
                         <h1 class="font-bold text-2xl">Table des eleves</h1>
                     </div> 
                     <div class="px-16 pt-4">
-                        <table class="w-full">
-                            <thead class="bg-blue-400 border-2 border-slate-700">
-                                <tr>
-                                    <th class="p-4 border-2 border-slate-700">Id</th>
-                                    <th class="p-4 border-2 border-slate-700">Nom</th>
-                                    <th class="p-4 border-2 border-slate-700">Sexe</th>
-                                    <th class="p-4 border-2 border-slate-700">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($eleves as $eleve)
-                                    <tr class="@if(Session::get('groupmatrowselect') == $eleve->stud_id) bg-amber-300 @elseif($eleve->stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                                        <th class="border-2 border-slate-700 @if(Session::get('groupmatrowselect') == $eleve->stud_id) bg-amber-300 @elseif($eleve->stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$eleve->stud_id}}</th>
-                                        <th class="border-2 border-slate-700"><input class="w-24 text-center @if(Session::get('groupmatrowselect') == $eleve->stud_id) bg-amber-300 @elseif($eleve->stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$eleve->stud_name}}"></th>
-                                        <th class="border-2 border-slate-700"><input class="text-center @if(Session::get('groupmatrowselect') == $eleve->stud_id) bg-amber-300 @elseif($eleve->stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$eleve->stud_sexe}}"></th>
-                                        <th class="border-2 border-slate-700">
-                                            <div class="flex justify-evenly">
-                                                <a href="{{route('groupessessions-groupmatsupp', ['groupmatid'=>$groupe_matiere->groupmat_id])}}"><i class="fa-solid fa-trash-can"></i></a>
-                                                <a href="{{route('groupessessions-selectgroupmatrow', ['groupmatid'=>$groupe_matiere->groupmat_id])}}"><i class="fa-solid fa-square-check"></i></a>
-                                            </div>                                           
-                                        </th>
-                                    </tr>
-                                @endforeach 
-                                <form action="{{route('groupessessions-save')}}" method="post" id="formEnregistrer">  
-                                    @csrf         
-                                    @if(Session::has('nbrgroupmatvide'))
-                                        @for ($i = Session::get('nbrgroupmatbd'); $i <= Session::get('nbrgroupmatvide'); $i++)                            
-                                            <tr class="bg-red-200">
-                                                <th class="border-2 border-slate-700">{{$i}}</th>
-                                                <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="matiere"></th>
-                                                <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="nom"></th>
-                                                <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="numero"></th>
-                                                <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="description"></th>
-                                                <th class="border-2 border-slate-700"><a href="{{route('groupessessions-annuler')}}"><i class="fa-solid fa-trash-can"></i></a></th>
-                                            </tr>                  
-                                        @endfor
-                                    @endif
-                                </form>     
-                            </tbody>
-                        </table>
+                        @include('tables.tableeleves')
                     </div>
                 </div>
             </div>
@@ -83,26 +44,7 @@
                         <h1 class="font-bold text-2xl">Table des eleves par groupes</h1>
                     </div> 
                     <div class="px-16 pt-4">
-                        <table class="w-full">
-                            <thead class="bg-blue-400 border-2 border-slate-700">
-                                <tr>
-                                    <th class="p-4 border-2 border-slate-700">Id</th>
-                                    <th class="p-4 border-2 border-slate-700">Groupe</th>
-                                    <th class="p-4 border-2 border-slate-700">Nom</th>
-                                    <th class="p-4 border-2 border-slate-700">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($elevesgroupes as $elevegroupe)
-                                    <tr class="@if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                                        <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->group_stud_id}}</th>
-                                        <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->groupmat_id}}</th>
-                                        <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->stud_id}}</th>
-                                        <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('groupessessions-groupsesssupp', ['groupsessid'=>$sess_grmat->sess_grmat_id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
-                                    </tr>
-                                @endforeach 
-                            </tbody>
-                        </table>
+                        @include('tables.tableelevesgroupes')
                     </div>
                 </div>                  
             </div>
@@ -114,26 +56,7 @@
                         <h1 class="font-bold text-2xl">Table des groupes/matieres</h1>
                     </div> 
                     <div class="px-16 pt-4">
-                        <table class="w-full">
-                            <thead class="bg-blue-400 border-2 border-slate-700">
-                                <tr>
-                                    <th class="p-4 border-2 border-slate-700">Id</th>
-                                    <th class="p-4 border-2 border-slate-700">Matiere</th>
-                                    <th class="p-4 border-2 border-slate-700">Numero</th>
-                                    <th class="p-4 border-2 border-slate-700">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($groupes_matieres as $groupe_matiere)
-                                    <tr class="@if(Session::get('sessionsrowselect') == $groupe_matiere->groupmat_id) bg-amber-300 @elseif($groupe_matiere->groupmat_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                                        <th class="border-2 border-slate-700">{{$groupe_matiere->groupmat_id}}</th>
-                                        <th class="border-2 border-slate-700">{{$groupe_matiere->sgroupmat_mat}}</th>
-                                        <th class="border-2 border-slate-700">{{$groupe_matiere->groupmat_num}}</th>
-                                        <th class="border-2 border-slate-700"><a href="{{route('groupessessions-selectsessionsrow', ['sessid'=>$groupe_matiere->groupmat_id])}}"><i class="fa-solid fa-square-check"></i></a></th>
-                                    </tr>
-                                @endforeach 
-                            </tbody>
-                        </table>
+                        @include('tables.tablegroupesmatieres')
                     </div>
                 </div>
             </div>
