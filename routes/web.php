@@ -37,6 +37,7 @@ Route::get('/notes-annuler', [NotesController::class, 'cancel'])->name("notes-an
 Route::get('/notes-supp/{id}', [NotesController::class, 'delete'])->name("notes-supp");
 Route::get('/notes-updateligne/{id}', [NotesController::class, 'updateRow'])->name("notes-updateligne");
 Route::post('/notes-update', [NotesController::class, 'update'])->name("notes-update");
+Route::post('/notes-save', [NotesController::class, 'save'])->name("notes-save");
 
 // Examens et travaux
 Route::get('/examenstravaux', [ExamensTravauxController::class, 'read']);

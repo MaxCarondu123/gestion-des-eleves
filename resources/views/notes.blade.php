@@ -27,8 +27,8 @@
             </select>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formCreate">Creer</button>              
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formUpdate">Modifier</button>        
-            <a href="{{route('examenstravaux-ajoutligne')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>  
-            <a href="{{route('examenstravaux-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
+            <a href="{{route('notes-save')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Enregistrer</button></a>  
+            <a href="{{route('notes-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>
             <span class="text-red-500">{{Session::get('updateFail')}}</span>
             <span class="text-red-500">@error('nom')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span><br>

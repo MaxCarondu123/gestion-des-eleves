@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class NotesController extends Controller
 {
-    
+    public function update(){
+
+    }
     
     public function read(){
         $notes = DB::table('notes')->get();
@@ -27,5 +29,22 @@ class NotesController extends Controller
         return view('notes', ['notes' => $notes, 'groupes_matieres' => $groupes_matieres, 'groupes_eleves' => $groupes_eleves, 'eleves' => $eleves, 'examens_travaux' => $examens_travaux]);
     }
 
-  
+    public function save(){
+
+    }
+
+    public function updateRow($id){
+        session(['updateid' => $id]);
+
+        //Retourne vue session
+        return redirect('notes');  
+    }
+
+    public function cancel(){
+        session()->flush('idsuivant');
+        session()->flush('updateid');
+    
+        //Retourne vue session
+        return redirect('notes'); 
+    }
 }
