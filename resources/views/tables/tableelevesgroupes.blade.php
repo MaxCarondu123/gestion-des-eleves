@@ -9,11 +9,11 @@
     </thead>
     <tbody>
         @foreach ($elevesgroupes as $elevegroupe)
-            <tr class="@if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->group_stud_id}}</th>
-                <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->groupmat_id}}</th>
-                <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->stud_id}}</th>
-                <th class="border-2 border-slate-700 @if($elevegroupe->group_stud_id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('groupessessions-groupsesssupp', ['groupsessid'=>$sess_grmat->sess_grmat_id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
+            <tr class="@if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->id}}</th>
+                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->groupmat_id}}</th>
+                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$elevegroupe->stud_id}}</th>
+                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('elevesgroupes-elevesgroupsesssupp', ['elevegroupsesid'=>$elevegroupe->id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
             </tr>
         @endforeach 
     </tbody>

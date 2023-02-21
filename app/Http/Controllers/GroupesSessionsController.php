@@ -9,7 +9,34 @@ use Illuminate\Support\Facades\DB;
 
 class GroupesSessionsController extends Controller
 {
-    public function chercherDonnes(){
+    public function create(){
+
+    }
+
+    public function update(Request $request){
+        if(session()->exists('updateid')){
+            return self::validerChamps($request);
+
+            //Chercher les infos de l'utilisteurs
+            $grMat = groupes_matieres::find(session('updateid'));
+            $grMat->groupmat_mat = $request->matiere;
+            $grMat->groupmat_name= $request->nom;
+            $grMat->groupmat_num = $request->numero;
+            $grMat->groupmat_description = $request->description;
+            $grMat->user_id = 1;
+
+            //Requete sql pour entrer les informations
+            $res = $grMat->update();
+        }else{
+            //Fail password retour a la page
+            return back()->with('updateFail', "Veuillez selectionner une ligne a modifier");
+        }
+
+        //Retourner a annuler
+        return self::cancel();  
+    }
+
+    public function read(){
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
         //Requete pour aller chercher les groupes par sessions
@@ -20,12 +47,12 @@ class GroupesSessionsController extends Controller
         //session()->flush('nbrsessions');
         //session()->flush('nbrsessionsvide');
 
-        if(!Session()->exists('sessionsrowselect')){
-            session(['sessionsrowselect' => 1]);
-        }
-        if(!Session()->exists('groupmatrowselect')){
-            session(['groupmatrowselect' => 1]);
-        }
+        //if(!Session()->exists('sessionsrowselect')){
+            //session(['sessionsrowselect' => 1]);
+        //}
+        //if(!Session()->exists('groupmatrowselect')){
+            //session(['groupmatrowselect' => 1]);
+        //}
 
         //Verifier si au moin une sessions
         if(!$sessions){
@@ -36,32 +63,33 @@ class GroupesSessionsController extends Controller
         return view("groupessessions", ['groupes_matieres' => $groupes_matieres, 'sess_grmats' => $sess_grmats, 'sessions' => $sessions]);
     }
 
-    public function ajoutDonnees(){
-        //Requete aller chercher le nombre de sessions
-        $groupMatHaute = DB::table('groupes_matieres')->orderBy('groupmat_id', 'desc')->first();
-        $nbrGroupMatBD  = $groupMatHaute->groupmat_id + 1;
-
-        $nbrGroupMatVide = $nbrGroupMatBD;
-
-        //if(session()->exists('nbrgroupmatvide')){
-            //$nbrGroupMatVide = session()->get('nbrgroupmatvide');
-            //$nbrGroupMatVide++;
-        //}
-
-        session(['nbrgroupmatvide' => $nbrGroupMatVide]);
-        session(['nbrgroupmatbd' => $nbrGroupMatBD]);
-
-        //Activer bouton enregistrer
-        //$btnEnregistrer = false;
-        //session(['btnenregistrer' => $btnEnregistrer]);
-
-        //Retourne vue session
-        return redirect('groupessessions');       
+    public function delete(){
+        
     }
 
-    public function annuler(){
+    public function save(Request $request){
+        self::validerChamps($request);
+
+        //Chercher les infos de l'utilisteurs
+        $grMat = new groupes_matieres();
+        $grMat->groupmat_mat = $request->matiere;
+        $grMat->groupmat_name= $request->nom;
+        $grMat->groupmat_num = $request->numero;
+        $grMat->groupmat_description = $request->description;
+        $grMat->user_id = 1;
+
+        //Requete sql pour entrer les informations
+        $res = $grMat->save();
+
+        //Retourner a annuler
+        return self::cancel();
+    }
+
+    public function cancel(){
         session()->flush('nbrgroupmatbd');
         session()->flush('nbrgroupmatvide');
+        session()->flush('groupmatrowselect');
+        session()->flush('sessionsrowselect');
         
         //Desactiver bouton enregistrer
         //$btnEnregistrer = true;
@@ -69,6 +97,23 @@ class GroupesSessionsController extends Controller
 
         //Retourne vue session
         return redirect('groupessessions');  
+    }
+
+    public function addRow(){
+        //Requete aller chercher le nombre de sessions
+        $nbrGroupMatBD = DB::table('groupes_matieres')->orderBy('id', 'desc')->first();
+
+        $idSuivant = 0;
+        if($nbrGroupMatBD){
+            $idSuivant = $nbrGroupMatBD->id + 1;
+        }else{
+            $idSuivant = 1;
+        }
+        
+        session(['idsuivant' => $idSuivant]);
+
+        //Retourne vue session
+        return redirect('groupessessions');       
     }
 
     public function selectSessionsRow($sessId){
@@ -85,7 +130,40 @@ class GroupesSessionsController extends Controller
         return redirect('groupessessions');  
     }
 
-    public function sauvegarderDonnees(Request $request){
+    public function addGroupSess(){
+        $sessGrMat = new sess_grmats();
+        $sessGrMat->sess_id = session('sessionsrowselect');
+        $sessGrMat->groupmat_id = session('groupmatrowselect');
+
+        $res = $sessGrMat->save();
+
+        //Retourne vue session
+        return redirect('groupessessions');
+    }
+
+    public function groupMatDelete($groupMatId){
+        //Valider que la session existe
+        $groupMat = groupes_matieres::where('id', '=' ,$groupMatId)->first();
+        if($groupMat){
+            groupes_matieres::where('id', '=' ,$groupMatId)->delete();
+
+            //Retourne vue session
+            return redirect('groupessessions');  
+        }
+    }
+
+    public function groupSessDelete($groupSessId){
+        //Valider que la session existe
+        $groupSess = sess_grmats::where('id', '=' ,$groupSessId)->first();
+        if($groupSess){
+            sess_grmats::where('id', '=' ,$groupSessId)->delete();
+
+            //Retourne vue session
+            return redirect('groupessessions');  
+        }
+    }
+
+    public function validerChamps($request){
         //Valider les champs
         $request->validate([
             'matiere' => 'required|alpha:ascii',
@@ -97,52 +175,5 @@ class GroupesSessionsController extends Controller
             'nom.required' => 'Veuillez entrer un nom',
             'numero.required' => 'Veuillez entrer un numero'
         ]);
-
-        //Chercher les infos de l'utilisteurs
-        $grMat = new groupes_matieres();
-        $grMat->groupmat_mat = $request->matiere;
-        $grMat->groupmat_name= $request->nom;
-        $grMat->groupmat_num = $request->numero;
-        $grMat->groupmat_description = $request->description;
-        $grMat->user_id = session('connexion');
-
-        //Requete sql pour entrer les informations
-        $res = $grMat->save();
-
-        //Retourner a annuler
-        return self::annuler();
-    }
-
-    public function ajouterGroupSess(){
-        $sessGrMat = new sess_grmats();
-        $sessGrMat->id = session('sessionsrowselect');
-        $sessGrMat->groupmat_id = session('groupmatrowselect');
-
-        $res = $sessGrMat->save();
-
-        //Retourne vue session
-        return redirect('groupessessions');
-    }
-
-    public function groupMatSupp($groupMatId){
-        //Valider que la session existe
-        $groupMat = groupes_matieres::where('groupmat_id', '=' ,$groupMatId)->first();
-        if($groupMat){
-            groupes_matieres::where('groupmat_id', '=' ,$groupMatId)->delete();
-
-            //Retourne vue session
-            return redirect('groupessessions');  
-        }
-    }
-
-    public function groupSessSupp($groupSessId){
-        //Valider que la session existe
-        $groupSess = sess_grmats::where('sess_grmat_id', '=' ,$groupSessId)->first();
-        if($groupSess){
-            sess_grmats::where('sess_grmat_id', '=' ,$groupSessId)->delete();
-
-            //Retourne vue session
-            return redirect('groupessessions');  
-        }
     }
 }

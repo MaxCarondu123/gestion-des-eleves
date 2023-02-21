@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('groupes_matieres', function (Blueprint $table) {
+        Schema::create('periodes', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('utilisateurs');
-            $table->string('groupmat_mat');
-            $table->string('groupmat_name');
-            $table->integer('groupmat_num');
-            $table->string('groupmat_description')->nullable();
+            $table->unsignedBigInteger('sess_grmat_id');
+            $table->foreign('sess_grmat_id')->references('id')->on('sess_grmats');
+            $table->date('per_date');
+            $table->dateTime('per_heure');
+            $table->string('per_notes')->nullable();
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groupes_matieres');
+        Schema::dropIfExists('periodes');
     }
 };

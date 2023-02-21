@@ -10,56 +10,53 @@ use App\Http\Controllers\CommunController;
 
 class SessionController extends Controller
 {
-    public function chercherDonnees(Request $request){
+    public function create(){
+
+    }
+
+    public function update(Request $request){
+        if(session()->exists('updateid')){
+            self::validerChamps($request);
+
+            //Chercher les infos de l'utilisteurs
+            $session = sessions::find(session('updateid'));
+            $session->sess_num = $request->etape;
+            $session->sess_startdate = $request->datedebut;
+            $session->sess_enddate = $request->datefin;
+
+            //Requete sql pour entrer les informations
+            $res = $session->update();
+        }else{
+            //Fail password retour a la page
+            return back()->with('updateFail', "Veuillez selectionner une ligne a modifier");
+        }
+
+        //Retourner a annuler
+        return self::cancel();  
+    }
+
+    public function read(){
         $sessions = DB::table('sessions')->get();
-        
-        //session()->flush('nbrsessions');
-        //session()->flush('nbrsessionsvide');
 
-        //Verifier si au moin une sessions
-        if(!$sessions){
-            
-        }
 
-        //Retourne vue session
-        return view("sessions", ['sessions' => $sessions]);
+        //print_r(Schema::getColumnListing('sessions'));
+
+        return view('sessions', ['sessions' => $sessions]);
     }
 
-    public function ajoutDonnees(Request $request){
-        //Requete aller chercher le nombre de sessions
-        $sessionHaute = DB::table('sessions')->orderBy('sess_id', 'desc')->first();
-        $nbrSessionsBD  = $sessionHaute->sess_id + 1;
+    public function delete($sessId){
+        //Valider que la session existe
+        $session = sessions::where('id', '=' ,$sessId)->first();
+        if($session){
+            sessions::where('id', '=' ,$sessId)->delete();
 
-        $nbrSessionsVide = $nbrSessionsBD;
-
-        if(session()->exists('nbrsessionsvide')){
-            $nbrSessionsVide = session()->get('nbrsessionsvide');
-            $nbrSessionsVide++;
+            //Retourne vue session
+            return redirect('sessions');  
         }
-
-        session(['nbrsessionsvide' => $nbrSessionsVide]);
-        session(['nbrsessionsbd' => $nbrSessionsBD]);
-
-        //Activer bouton enregistrer
-        $btnEnregistrer = false;
-        session(['btnenregistrer' => $btnEnregistrer]);
-
-        //Retourne vue session
-        return redirect('sessions');       
     }
 
-    public function sauvegarderDonnees(Request $request){
-
-        //Valider les champs
-        $request->validate([
-            'etape' => 'required',
-            'datedebut' => 'required',
-            'datefin' => 'required'
-        ],[
-            'etape.required' => "Veuillez entrer une etape",
-            'datedebut.required' => "Veuillez entrer une date de debut",
-            'datefin.required' => "Veuillez entrer une date de fin"
-        ]);
+    public function save(Request $request){
+        self::validerChamps($request);
 
         //Chercher les infos de l'utilisteurs
         $session = new sessions();
@@ -68,13 +65,13 @@ class SessionController extends Controller
         $session->sess_enddate = $request->datefin;
         if($request->courante == 'on'){
             $courante = true;
-
-            //Verifier si une session courante
-            $sessionCourante = sessions::where('sess_current', '=', true)->first();
-            if($sessionCourante){
-                //Enlever la session qui etait courante
-                sessions::where('sess_id', '=', $sessionCourante->sess_id)->update(['sess_current' => false]);
-            }
+        
+        //Verifier si une session courante
+        $sessionCourante = sessions::where('sess_current', '=', true)->first();
+        if($sessionCourante){
+            //Enlever la session qui etait courante
+            sessions::where('id', '=', $sessionCourante->id)->update(['sess_current' => false]);
+        }
         }else{
             $courante = false;
         }
@@ -84,10 +81,27 @@ class SessionController extends Controller
         $res = $session->save();
 
         //Retourner a annuler
-        return self::annuler();
+        return self::cancel();
     }
 
-    public function annuler(){
+    public function addRow(){
+        //Requete aller chercher le nombre de sessions
+        $nbrSessionsBD = DB::table('sessions')->orderBy('id', 'desc')->first();
+  
+        $idSuivant = 0;
+        if($nbrSessionsBD){
+            $idSuivant = $nbrSessionsBD->id + 1;
+        }else{
+            $idSuivant = 1;
+        }
+        
+        session(['idsuivant' => $idSuivant]);
+
+        //Retourne vue session
+        return redirect('sessions');  
+    }
+
+    public function cancel(){
         session()->flush('nbrsessions');
         session()->flush('nbrsessionsvide');
         
@@ -96,70 +110,34 @@ class SessionController extends Controller
         session(['btnenregistrer' => $btnEnregistrer]);
 
         //Retourne vue session
-        return redirect('sessions');  
+        return redirect('sessions'); 
     }
 
-    public function supprimer($sessId){
-        //Valider que la session existe
-        $session = sessions::where('sess_id', '=' ,$sessId)->first();
-        if($session){
-            sessions::where('sess_id', '=' ,$sessId)->delete();
-
-            //Retourne vue session
-            return redirect('sessions');  
-        }
-    }
-
-    public function changecourante($sessId){
+    public function changeCourante($sessId){
         //Verifier qui a une sessions courante
         $session = sessions::where('sess_current', '=', true)->first();
         if($session){
             //Enlever la session qui etait courante
-            sessions::where('sess_id', '=', $session->sess_id)->update(['sess_current' => false]);
+            sessions::where('id', '=', $session->id)->update(['sess_current' => false]);
         }
 
         //mettre la nouvelle session courante
-        sessions::where('sess_id', '=', $sessId)->update(['sess_current' => true]);
+        sessions::where('id', '=', $sessId)->update(['sess_current' => true]);
 
         //Retourne vue session
         return redirect('sessions');  
     }
 
+    public function selectRow($sessId){
+        session(['updateid' => $sessId]);
 
-
-
-
-
-
-
-
-
-
-
-
-    public function create(){
-
+        //Retourne vue session
+        return redirect('sessions'); 
     }
 
-    public function update(){
-        
-    }
-
-    public function read(){
-        $sessions = DB::table('sessions')->get();
-
-        //print_r(Schema::getColumnListing('sessions'));
-
-        return view('sessions', ['sessions' => $sessions]);
-    }
-
-    public function delete(){
-        
-    }
-
-    public function save(Request $request){
-        //Valider les champs
-        $request->validate([
+    public function validerChamps($request){
+         //Valider les champs
+         $request->validate([
             'etape' => 'required',
             'datedebut' => 'required',
             'datefin' => 'required'
@@ -168,45 +146,6 @@ class SessionController extends Controller
             'datedebut.required' => "Veuillez entrer une date de debut",
             'datefin.required' => "Veuillez entrer une date de fin"
         ]);
-
-        //Chercher les infos de l'utilisteurs
-        $session = new sessions();
-        $session->sess_num = $request->etape;
-        $session->sess_startdate = $request->datedebut;
-        $session->sess_enddate = $request->datefin;
-        if($request->courante == 'on'){
-            $courante = true;
-
-            //Verifier si une session courante
-            $sessionCourante = sessions::where('sess_current', '=', true)->first();
-            if($sessionCourante){
-                //Enlever la session qui etait courante
-                sessions::where('sess_id', '=', $sessionCourante->sess_id)->update(['sess_current' => false]);
-            }
-        }else{
-            $courante = false;
-        }
-        $session->sess_current = $courante;
-
-        //Requete sql pour entrer les informations
-        $res = $session->save();
-
-        //Retourner a annuler
-        return self::annuler();
-    }
-
-    public function add(){
-        //Requete aller chercher le nombre de sessions
-        $sessionHaute = DB::table('sessions')->orderBy('id', 'desc')->first();
-        $nbrSessionsBD  = $sessionHaute->id + 1;
-
-        $nbrSessionsVide = $nbrSessionsBD;
-
-        session(['nbrsessionsvide' => $nbrSessionsVide]);
-        session(['nbrsessionsbd' => $nbrSessionsBD]);
-
-        //Retourne vue session
-        return redirect('sessions');  
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\eleves;
+use App\Models\groupes_eleves;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,36 +33,101 @@ class ElevesGroupesController extends Controller
         
     }
 
-    public function save(){
-        
+    public function save(Request $request){
+        //Valider les champs
+        $request->validate([
+            'nom' => 'required|alpha:ascii'
+        ],[
+            'nom.required' => 'Veuillez entrer un nom'
+        ]);
+
+        //Chercher les infos de l'utilisteurs
+        $eleves = new eleves();
+        $eleves->stud_name = $request->nom;
+        $eleves->stud_sexe = $request->sexe;
+
+
+        //Requete sql pour entrer les informations
+        $res = $eleves->save();
+
+        //Retourner a annuler
+        return self::cancel();
     }
 
-    public function add(){
-        $nbrGroupMatVide = 0;
-        $nbrGroupMatBD = 0;
+    public function addRow(){
         //Requete aller chercher le nombre de sessions
-        $first = DB::table('groupes_matieres')->orderBy('groupmat_id', 'desc')->first();
-        if($first){
-            $nbrGroupMatBD  = $first->groupmat_id + 1;
-        }else{
+        $nbrElevesBD = DB::table('eleves')->orderBy('id', 'desc')->first();
 
+        
+        $idSuivant = 0;
+        if($nbrElevesBD){
+            $idSuivant = $nbrElevesBD->id + 1;
+        }else{
+            $idSuivant = 1;
         }
         
+        session(['idsuivant' => $idSuivant]);
 
+        //Retourne vue session
+        return redirect('elevesgroupes');       
+    }
+
+    public function cancel(){
+        session()->flush('nbrgroupmatbd');
+        session()->flush('nbrgroupmatvide');
         
-
-        //if(session()->exists('nbrgroupmatvide')){
-            //$nbrGroupMatVide = session()->get('nbrgroupmatvide');
-            //$nbrGroupMatVide++;
-        //}
-
-        session(['nbrgroupmatbd' => $nbrGroupMatBD]);
-
-        //Activer bouton enregistrer
-        //$btnEnregistrer = false;
+        //Desactiver bouton enregistrer
+        //$btnEnregistrer = true;
         //session(['btnenregistrer' => $btnEnregistrer]);
 
         //Retourne vue session
-        return redirect('groupessessions');       
+        return redirect('elevesgroupes');  
+    }
+
+    public function SelectElevesRow($studId){
+        session(['elevesrowselect' => $studId]);
+
+        //Retourne vue session
+        return redirect('elevesgroupes'); 
+    }
+
+    public function SelectGrMatRow($grMatId){
+        session(['grMatrowselect' => $grMatId]);
+
+        //Retourne vue session
+        return redirect('elevesgroupes'); 
+    }
+
+    public function ElevesDelete($studId){
+        //Valider que la session existe
+        $eleve = eleves::where('id', '=' ,$studId)->first();
+        if($eleve){
+            eleves::where('id', '=' ,$studId)->delete();
+
+            //Retourne vue session
+            return redirect('elevesgroupes');  
+        }
+    }
+
+    public function ElevesGroupesDelete($eleveGroupeId){
+        //Valider que la session existe
+        $groupe_eleve = groupes_eleves::where('id', '=' ,$eleveGroupeId)->first();
+        if($groupe_eleve){
+            groupes_eleves::where('id', '=' ,$eleveGroupeId)->delete();
+
+            //Retourne vue session
+            return redirect('elevesgroupes');  
+        }
+    }
+
+    public function addEleveGroup(){
+        $eleveGroup = new groupes_eleves();
+        $eleveGroup->groupmat_id = session('grMatrowselect');
+        $eleveGroup->stud_id = session('elevesrowselect');
+
+        $res = $eleveGroup->save();
+
+        //Retourne vue session
+        return redirect('elevesgroupes');
     }
 }

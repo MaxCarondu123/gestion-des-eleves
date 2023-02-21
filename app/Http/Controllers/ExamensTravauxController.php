@@ -15,7 +15,7 @@ class ExamensTravauxController extends Controller
             //Chercher les infos de l'utilisteurs
             $examensTravaux = new examens_travaux();
             $examensTravaux->user_id = 1;//session('connexion');
-            $examensTravaux->sess_grmat_id = $request->sessgroupid;
+            $examensTravaux->sess_grmat_id = 1;
             $examensTravaux->extr_name = $request->nom;
             $examensTravaux->extr_date = $request->date;
             $examensTravaux->extr_pond = $request->ponderation;
@@ -41,7 +41,7 @@ class ExamensTravauxController extends Controller
             //Chercher les infos de l'utilisteurs
             $examensTravaux = examens_travaux::find(session('updateid'));
             $examensTravaux->user_id = 1;//session('connexion');
-            $examensTravaux->sess_grmat_id = $request->sessgroupid;
+            $examensTravaux->sess_grmat_id = 1;
             $examensTravaux->extr_name = $request->nom;
             $examensTravaux->extr_date = $request->date;
             $examensTravaux->extr_pond = $request->ponderation;
@@ -60,7 +60,7 @@ class ExamensTravauxController extends Controller
     }
     
     public function read(){
-        $examens_travaux = DB::table('examens_travaux')->get();
+        $examens_travaux = DB::table('examens_travauxes')->get();
 
         //Retourne vue session
         return view('examenstravaux', ['examens_travaux' => $examens_travaux]);
@@ -79,7 +79,7 @@ class ExamensTravauxController extends Controller
 
     public function addRow(){
         //Requete aller chercher le nombre de sessions
-        $nbrExamensTravauxBD = DB::table('examens_travaux')->orderBy('id', 'desc')->first();
+        $nbrExamensTravauxBD = DB::table('examens_travauxes')->orderBy('id', 'desc')->first();
 
         $idSuivant = 0;
         if($nbrExamensTravauxBD){

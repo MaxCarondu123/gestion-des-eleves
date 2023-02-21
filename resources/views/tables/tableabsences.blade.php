@@ -25,42 +25,28 @@
             <th scope="row" class="border-2 border-slate-700 @if($groupe_eleve->id % 2) bg-green-400 @else bg-green-300 @endif">{{$groupe_eleve->stud_name}}</th> 
 
             @foreach($examens_travaux as $examen_travail)
-                <td class="text-center border-2 border-slate-700">
-                    <input class="text-center @if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="" name="note" id="note-{{$groupe_eleve->id}}" onblur="Sortie_input({{$groupe_eleve->id}})">
-                    @foreach($notes as $note)              
-                        @if($examen_travail->id == $note->extr_id)                        
+                @foreach($notes as $note)
+                
+                    @if($examen_travail->id == $note->extr_id) 
+                        <td class="text-center border-2 border-slate-700">
                             @if(Session::get('updateid') == $examen_travail->id)
                                 <input class="text-center @if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$note->note_note}}" name="note" id="note-{{$groupe_eleve->id}}" onblur="Sortie_input({{$groupe_eleve->id}})">
                             @else
                                 {{$note->note_note}}
-                            @endif                                                    
-                        @endif
-                    @endforeach
-                </td>
-                <td class="text-center border-2 border-slate-700">
-                    @foreach($notes as $note)              
-                        @if($examen_travail->id == $note->extr_id)                                                    
+                            @endif                                   
+                        </td>
+                        <td class="text-center border-2 border-slate-700">
                             @if(Session::get('updateid') == $examen_travail->id)
                                 <input class="text-center @if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$note->note_note100}}" name="note100" id="note100-{{$groupe_eleve->id}}" disabled>
                             @else
                                 {{$note->note_note100}}
-                            @endif                         
-                        @endif
-                    @endforeach
-                </td>                                   
+                            @endif 
+                        </td>
+                    @endif
+
+                @endforeach
             @endforeach
 
         </tr>
     @endforeach
 </table>
-
-<script>
-    function Sortie_input(id){
-        note = document.getElementById('note-'+id).value;
-        surcombien = document.getElementById('surcombien').innerHTML;
-
-        document.getElementById('note100-'+id).value = ((note * 100) / surcombien)
-
-        console.log(document.getElementById('note100-'+id));
-    }
-</script>

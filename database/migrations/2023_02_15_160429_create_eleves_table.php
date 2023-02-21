@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('eleves', function (Blueprint $table) {
-            $table->id('stud_id');
+            $table->id('id');
             $table->string('stud_name');
             $table->char('stud_sexe')->default('M');
         });

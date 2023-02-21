@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('groupes_eleves', function (Blueprint $table) {
-            $table->id('group_stud_id');
+            $table->id('id');
             $table->unsignedBigInteger('groupmat_id');
             $table->foreign('groupmat_id')->references('id')->on('groupes_matiere');
             $table->unsignedBigInteger('stud_id');

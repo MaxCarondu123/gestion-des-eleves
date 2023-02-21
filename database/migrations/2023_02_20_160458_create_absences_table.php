@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->id('id');
-            $table->integer('sess_num');
-            $table->date('sess_startdate');
-            $table->date('sess_enddate');
-            $table->boolean('sess_current');
+            $table->unsignedBigInteger('per_id');
+            $table->foreign('per_id')->references('id')->on('periodes');
+            $table->unsignedBigInteger('group_stud_id');
+            $table->foreign('group_stud_id')->references('id')->on('groupes_eleves');
+            $table->string('abs_description')->nullable();
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('absences');
     }
 };

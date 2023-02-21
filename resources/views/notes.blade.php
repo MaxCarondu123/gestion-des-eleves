@@ -22,7 +22,7 @@
             <label for="">Groupes / Matieres:</label>
             <select class="text-center py-2 mb-6 w-full bg-green-400 rounded-3xl" name="" id="">
                 @foreach ($groupes_matieres as $groupe_matiere)
-                    <option class="text-center" value="">{{$groupe_matiere->groupmat_id}}</option>
+                    <option class="text-center" value="">{{$groupe_matiere->id}}</option>
                 @endforeach
             </select>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formCreate">Creer</button>              

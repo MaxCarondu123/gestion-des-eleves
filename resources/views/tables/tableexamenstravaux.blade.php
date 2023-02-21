@@ -1,7 +1,6 @@
 <table class="w-full">
     <thead class="bg-blue-400 border-2 border-slate-700">
         <tr>
-            <th class="p-4 border-2 border-slate-700">Id</th>
             <th class="p-4 border-2 border-slate-700">Nom</th>
             <th class="p-4 border-2 border-slate-700">Date</th>
             <th class="p-4 border-2 border-slate-700">Ponderation</th>
@@ -17,7 +16,6 @@
             
                 @csrf
                 <tr class="@if(Session::get('updateid') == $examen_travail->id) bg-amber-300 @elseif($examen_travail->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                    <th class="border-2 border-slate-700">{{$examen_travail->id}}</th>
                     <th class="border-2 border-slate-700">
                         @if(Session::get('updateid') == $examen_travail->id)
                             <input class="text-center bg-amber-300" type="text" value="{{$examen_travail->extr_name}}" name="nom">
@@ -70,7 +68,6 @@
             @csrf         
             @if(Session::has('idsuivant'))                        
                     <tr class="bg-red-200">
-                        <th class="border-2 border-slate-700">{{Session::get('idsuivant')}}</th>
                         <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="nom"></th>
                         <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="date" name="date"></th>
                         <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="ponderation"></th>

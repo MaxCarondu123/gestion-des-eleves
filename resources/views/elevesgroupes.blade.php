@@ -22,13 +22,11 @@
                 <div class="flex items-center">
                     <div class="mx-12">
                         <a href="{{route('elevesgroupes-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve</button></a>
-                        <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve au groupe</button></a>
+                        <a href="{{route('elevesgroupes-ajouterEleveGroup')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve au groupe</button></a>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>
-                        <a href="{{route('groupessessions-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>
+                        <a href="{{route('elevesgroupes-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>
                         <!--Erreur-->
-                        <span class="text-red-500">@error('matiere')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span><br>
-                        <span class="text-red-500">@error('nom')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span><br>
-                        <span class="text-red-500">@error('numero')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span>
+                        <span class="text-red-500">@error('nom')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span>
                     </div>                   
                 </div>            
             </div>
@@ -53,7 +51,7 @@
             <div class="flex w-1/2 h-full ">
                 <div class="w-full">
                     <div class="flex justify-center items-center h-10">
-                        <h1 class="font-bold text-2xl">Table des groupes/matieres</h1>
+                        <h1 class="font-bold text-2xl">Table des groupes avec leur matiere</h1>
                     </div> 
                     <div class="px-16 pt-4">
                         @include('tables.tablegroupesmatieres')

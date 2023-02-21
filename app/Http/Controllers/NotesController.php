@@ -16,14 +16,21 @@ class NotesController extends Controller
     
     public function read(){
         $notes = DB::table('notes')->get();
+
+            //print_r($notes);
+            //dd($notes);
+
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
 
-        $groupes_eleves = DB::table('groupes_eleves')->get();
+        $groupes_eleves = DB::table('groupes_eleves')
+            ->join('eleves', 'eleves.id', '=', 'groupes_eleves.stud_id')
+            ->where('groupes_eleves.groupmat_id', '=', 1)
+            ->get();
 
         $eleves = DB::table('eleves')->get();
 
-        $examens_travaux = DB::table('examens_travaux')->get();
+        $examens_travaux = DB::table('examens_travauxes')->get();
 
         //Retourne vue session
         return view('notes', ['notes' => $notes, 'groupes_matieres' => $groupes_matieres, 'groupes_eleves' => $groupes_eleves, 'eleves' => $eleves, 'examens_travaux' => $examens_travaux]);
