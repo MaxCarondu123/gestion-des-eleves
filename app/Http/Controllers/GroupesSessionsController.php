@@ -14,11 +14,11 @@ class GroupesSessionsController extends Controller
     }
 
     public function update(Request $request){
-        if(session()->exists('updateid')){
+        if(session()->exists('groupmatrowselect')){
             return self::validerChamps($request);
 
             //Chercher les infos de l'utilisteurs
-            $grMat = groupes_matieres::find(session('updateid'));
+            $grMat = groupes_matieres::find(session('groupmatrowselect'));
             $grMat->groupmat_mat = $request->matiere;
             $grMat->groupmat_name= $request->nom;
             $grMat->groupmat_num = $request->numero;

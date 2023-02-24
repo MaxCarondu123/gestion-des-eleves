@@ -47,17 +47,21 @@
                     <th class="border-2 border-slate-700">
                         @if(Session::get('updateid') == $examen_travail->id)
                             <select class="text-center bg-amber-300" name="eorw">
-                                <option @if($examen_travail->extr_eorw == 'E') selected @endif value="E">E</option>
-                                <option @if($examen_travail->extr_eorw == 'T') selected @endif value="T">T</option>
+                                <option @if($examen_travail->extr_eorw == 'E') selected @endif value="E">Examen</option>
+                                <option @if($examen_travail->extr_eorw == 'T') selected @endif value="T">Travail</option>
                             </select>
                         @else
-                            {{$examen_travail->extr_eorw}}
+                            @if($examen_travail->extr_eorw == 'E')
+                                Examen
+                            @else
+                                Travail
+                            @endif
                         @endif 
                     </th>
                     <th class="border-2 border-slate-700">
                         <div class="flex justify-evenly">
-                            <a href="{{route('examenstravaux-updateligne', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-pen"></i></a>
-                            <a href="{{route('examenstravaux-supp', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-trash-can"></i></a>            
+                            <a href="{{route('examenstravaux-supp', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{route('examenstravaux-updateligne', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-square-check"></i></a>            
                         </div>
                     </th>
                 </tr>
@@ -73,8 +77,8 @@
                         <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="ponderation"></th>
                         <th class="border-2 border-slate-700"><input class="text-center bg-red-200" type="text" name="surcombien"></th>
                         <th class="border-2 border-slate-700"><select class="text-center bg-red-200" name="eorw">
-                                                                <option value="E">E</option>
-                                                                <option value="T">T</option>
+                                                                <option value="E">Examen</option>
+                                                                <option value="T">Travail</option>
                                                                </select>
                         <th class="border-2 border-slate-700"></th>
                     </tr>                  

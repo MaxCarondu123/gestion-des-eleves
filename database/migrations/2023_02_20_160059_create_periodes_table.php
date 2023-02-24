@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sess_grmat_id');
             $table->foreign('sess_grmat_id')->references('id')->on('sess_grmats');
             $table->date('per_date');
-            $table->dateTime('per_heure');
+            $table->string('per_heure');
             $table->string('per_notes')->nullable();
         });
     }

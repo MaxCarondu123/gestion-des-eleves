@@ -23,6 +23,7 @@
                     <div class="mx-12">
                         <a href="{{route('elevesgroupes-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve</button></a>
                         <a href="{{route('elevesgroupes-ajouterEleveGroup')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve au groupe</button></a>
+                        <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>
                         <a href="{{route('elevesgroupes-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>
                         <!--Erreur-->

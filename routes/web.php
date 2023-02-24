@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsencesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConnexionController;
 use App\Http\Controllers\GroupesSessionsController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\CommunController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\ExamensTravauxController;
 use App\Http\Controllers\NotesController;
+use App\Http\Controllers\PeriodesController;
 
 // Connexion
 Route::get('/connexion', [ConnexionController::class, 'login']);
@@ -25,9 +27,7 @@ Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('c
 Route::get('/accueil', [CommunController::class, 'read']);
 
 // Absences
-Route::get('/absences', function () {
-    return view('absences');
-});
+Route::get('/absences', [AbsencesController::class, 'read']);
 
 // Notes
 Route::get('/notes', [NotesController::class, 'read']);
@@ -75,6 +75,7 @@ Route::get('/groupessessions-groupsesssupp/{groupsessid}', [GroupesSessionsContr
 Route::get('/elevesgroupes', [ElevesGroupesController::class, 'read']);
 Route::get('/elevesgroupes-ajout', [ElevesGroupesController::class, 'addRow'])->name('elevesgroupes-ajout');
 Route::post('/elevesgroupes-save', [ElevesGroupesController::class, 'save'])->name('elevesgroupes-save');
+Route::post('/elevesgroupes-update', [ElevesGroupesController::class, 'update'])->name('elevesgroupes-update');
 Route::get('/elevesgroupes-annuler', [ElevesGroupesController::class, 'cancel'])->name('elevesgroupes-annuler');
 Route::get('/elevesgroupes-selectelevesrow/{studid}', [ElevesGroupesController::class, 'selectElevesRow'])->name('elevesgroupes-selectelevesrow');
 Route::get('/elevesgroupes-selectgrmatsrow/{grmat}', [ElevesGroupesController::class, 'selectGrMatRow'])->name('elevesgroupes-selectgrmatsrow');
@@ -83,7 +84,5 @@ Route::get('/elevesgroupes-elevessupp/{studid}', [ElevesGroupesController::class
 Route::get('/elevesgroupes-elevesgroupsesssupp/{elevegroupsesid}', [ElevesGroupesController::class, 'ElevesGroupesDelete'])->name('elevesgroupes-elevesgroupsesssupp');
 
 // Periodes
-Route::get('/periodes', function () {
-    return view('periodes');
-});
-
+Route::get('/periodes', [PeriodesController::class, 'read']);
+Route::post('/periodes-createMonth', [PeriodesController::class, 'createMonth'])->name('periodes-createMonth');

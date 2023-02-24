@@ -19,15 +19,13 @@
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
             <div class="border-2 border-black mb-6"></div>
-            <label for="">Groupes / Matieres:</label>
+            <label for="">Nom du groupe:</label>
             <select class="text-center py-2 mb-6 w-full bg-green-400 rounded-3xl" name="" id="">
                 @foreach ($groupes_matieres as $groupe_matiere)
-                    <option class="text-center" value="">{{$groupe_matiere->id}}</option>
+                    <option class="text-center" value="{{$groupe_matiere->id}}">{{$groupe_matiere->groupmat_name}}</option>
                 @endforeach
-            </select>
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formCreate">Creer</button>              
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formUpdate">Modifier</button>        
-            <a href="{{route('notes-save')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Enregistrer</button></a>  
+            </select>       
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formSave">Enregistrer</button>
             <a href="{{route('notes-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>
             <span class="text-red-500">{{Session::get('updateFail')}}</span>

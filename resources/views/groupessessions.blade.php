@@ -81,8 +81,8 @@
             <div class="flex w-1/4 h-full bg-blue-200">
                 <div class="flex items-center">
                     <div class="mx-12">
-                        <a href="{{route('groupessessions-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe/matiere</button></a>
-                        <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe/matiere a la session</button></a>
+                        <a href="{{route('groupessessions-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe</button></a>
+                        <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe a la session</button></a>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>
                         <a href="{{route('groupessessions-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>
@@ -108,16 +108,28 @@
                         <table class="w-full">
                             <thead class="bg-blue-400 border-2 border-slate-700">
                                 <tr>
-                                    <th class="p-4 border-2 border-slate-700">Session Id</th>
-                                    <th class="p-4 border-2 border-slate-700">Groupe/Matiere Id</th>
+                                    <th class="p-4 border-2 border-slate-700">Etape</th>
+                                    <th class="p-4 border-2 border-slate-700">Nom du groupe</th>
                                     <th class="p-4 border-2 border-slate-700">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($sess_grmats as $sess_grmat)
                                     <tr class="@if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$sess_grmat->sess_id}}</th>
-                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">{{$sess_grmat->groupmat_id}}</th>
+                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                            @foreach ($sessions as $session)
+                                                @if($sess_grmat->sess_id == $session->id)
+                                                    {{$session->sess_num}}
+                                                @endif
+                                            @endforeach
+                                        </th>
+                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                            @foreach ($groupes_matieres as $groupe_matiere)
+                                                @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                    {{$groupe_matiere->groupmat_name}}
+                                                @endif
+                                            @endforeach
+                                        </th>
                                         <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('groupessessions-groupsesssupp', ['groupsessid'=>$sess_grmat->id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
                                     </tr>
                                 @endforeach 

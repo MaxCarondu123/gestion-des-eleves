@@ -19,16 +19,15 @@
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
             <label class="flex justify-center rounded-3xl" for="">Etape courante:</label>
-            <select class="py-2 mb-6 w-full rounded-3xl" onchange="location = this.value;">     
-                <option class="text-center" value="">Aucune</option>          
+            <select class="py-2 mb-6 w-full rounded-3xl" onchange="location = this.value;">              
                 @foreach ($sessions as $session)
-                    <option class="text-center" value="{{route('sessions-changecourante', ['sessid'=>$session->id])}}" @if($session->sess_current == true) selected @endif>{{$session->id}}</option>
+                    <option class="text-center" value="{{route('sessions-changecourante', ['sessid'=>$session->id])}}" @if($session->sess_current == true) selected @endif>{{$session->sess_num}}</option>
                 @endforeach
             </select>
-            <div class="border-2 border-black mb-6"></div>         
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>  
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>         
-            <a href="{{route('sessions-ajout')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>  
+            <div class="border-2 border-black mb-6"></div>               
+            <a href="{{route('sessions-ajout')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>   
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>    
             <a href="{{route('sessions-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
         </div>      
     </div>

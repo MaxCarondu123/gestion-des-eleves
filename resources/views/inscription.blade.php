@@ -11,7 +11,7 @@
                         <span class="text-red-500">{{Session::get('saveFail')}}</span>
                     @endif
                     @csrf
-                    <h1 class="flex justify-center pb-4 font-black">S'inscrire</h1>
+                    <h1 class="flex justify-center pb-4 font-black">Inscription</h1>
 
                     <label for="">Nom</label>
                     <input class="w-full py-1 mb-2 bg-neutral-200" type="text" name="name">

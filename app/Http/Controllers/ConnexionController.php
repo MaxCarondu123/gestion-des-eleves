@@ -118,7 +118,7 @@ class ConnexionController extends Controller
         $utilisateur = utilisateurs::where('user_email', '=', $request->email)->first();
         if($utilisateur){
             //Entrer User_id dans la session
-            $request->session()->put('email', $utilisateur->user_id);
+            $request->session()->put('email', $utilisateur->id);
 
             //Envoyer le email
             Mail::to($utilisateur->user_email)->send(new MdpOublierMail());
@@ -148,7 +148,7 @@ class ConnexionController extends Controller
                 //Valider le meme mot de passe
                 if($request->password1 == $request->password2){                   
                     //Requete sql modifier le mot de passe
-                    Utilisateurs::where('user_id', session()->get('email'))
+                    Utilisateurs::where('id', session()->get('email'))
                                 ->update(['user_password' => Hash::make($request->password1)]);
 
                     //Retour page connexion

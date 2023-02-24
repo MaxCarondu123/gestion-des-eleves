@@ -18,9 +18,9 @@
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
             <div class="border-2 border-black mb-6"></div>
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formCreate">Creer</button>              
-            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formUpdate">Modifier</button>        
-            <a href="{{route('examenstravaux-ajoutligne')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>  
+            <a href="{{route('examenstravaux-ajoutligne')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formUpdate">Mettre a jour</button> 
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formCreate">Enregistrer</button>     
             <a href="{{route('examenstravaux-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>
             <span class="text-red-500">{{Session::get('updateFail')}}</span>

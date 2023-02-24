@@ -13,8 +13,29 @@ class ElevesGroupesController extends Controller
 
     }
 
-    public function update(){
-        
+    public function update(Request $request){
+        if(session()->exists('elevesrowselect')){
+            //Valider les champs
+            $request->validate([
+                'nom' => 'required|alpha:ascii'
+            ],[
+                'nom.required' => 'Veuillez entrer un nom'
+            ]);
+
+            //Chercher les infos de l'utilisteurs
+            $eleve = eleves::find(session('elevesrowselect'));
+            $eleve->stud_name = $request->nom;
+            $eleve->stud_sexe= $request->sexe;
+
+            //Requete sql pour entrer les informations
+            $res = $eleve->update();
+        }else{
+            //Fail password retour a la page
+            return back()->with('updateFail', "Veuillez selectionner une ligne a modifier");
+        }
+
+        //Retourner a annuler
+        return self::cancel();  
     }
 
     public function read(){
