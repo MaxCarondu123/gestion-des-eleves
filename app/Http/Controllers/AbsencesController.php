@@ -18,10 +18,7 @@ class AbsencesController extends Controller
 
         $groupes_eleves = DB::table('groupes_eleves')
             ->join('eleves', 'eleves.id', '=', 'groupes_eleves.stud_id')
-            ->where('groupes_eleves.groupmat_id', '=', 1)
             ->get();
-
-        $eleves = DB::table('eleves')->get();
 
         $examens_travaux = DB::table('examens_travauxes')->get();
 
@@ -30,6 +27,6 @@ class AbsencesController extends Controller
         $periodes = DB::table('periodes')->get();
 
         //Retourne vue session
-        return view('absences', ['notes' => $notes, 'groupes_matieres' => $groupes_matieres, 'groupes_eleves' => $groupes_eleves, 'eleves' => $eleves, 'examens_travaux' => $examens_travaux, 'absences' => $absences, 'periodes' => $periodes]);
+        return view('absences', ['notes' => $notes, 'groupes_matieres' => $groupes_matieres, 'groupes_eleves' => $groupes_eleves, 'examens_travaux' => $examens_travaux, 'absences' => $absences, 'periodes' => $periodes]);
     }
 }

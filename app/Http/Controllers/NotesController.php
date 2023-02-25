@@ -17,22 +17,37 @@ class NotesController extends Controller
             ->get();
 
         foreach($groupes_eleves as $groupe_eleve){
-            print_r($request->input('note_'.$groupe_eleve->id));
-            //Chercher les infos de l'utilisteurs
-            $notes = new notes();
-            $notes->group_stud_id = $groupe_eleve->id;//session('connexion');
-            $notes->extr_id = session('updateid');
-            $notes->note_note = $request->note_  .+ $groupe_eleve->id;
-            $notes->note_note100 = $request->note100_ . $groupe_eleve->id;
+            $notes = DB::table('notes')
+                                ->where('group_stud_id', '=', $groupe_eleve->id)
+                                ->where('extr_id', '=', session('updateid'))
+                                ->get()
+                                ->first();
+            if($notes){
+                $notes = notes::find($notes->id);
+                $notes->group_stud_id = $groupe_eleve->id;//session('connexion');
+                $notes->extr_id = session('updateid');
+                $notes->note_note = $request->get('note_'.$groupe_eleve->id);
+                $notes->note_note100 = 100;
 
-            // $res = $notes->save();
+                //Requete sql pour entrer les informations
+                $res = $notes->update();
+            }else{
+                //Chercher les infos de l'utilisteurs
+                $notes = new notes();
+                $notes->group_stud_id = $groupe_eleve->id;//session('connexion');
+                $notes->extr_id = session('updateid');
+                $notes->note_note = $request->get('note_'.$groupe_eleve->id);
+                $notes->note_note100 = 100;
+
+                $res = $notes->save();
+            }
         }
 
         
 
 
         //Retourner a annuler
-        //return self::cancel();
+        return self::cancel();
     }
 
     public function update(){
