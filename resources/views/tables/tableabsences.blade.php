@@ -24,45 +24,94 @@
     </tr>
 
 
+    <form action="{{route('absences-save')}}" method="post" id="formSave">
+        @csrf
+        @foreach($groupes_eleves as $groupe_eleve)
+            <tr class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                <th scope="row" class="border-2 border-slate-700 @if($groupe_eleve->id % 2) bg-green-400 @else bg-green-300 @endif">{{$groupe_eleve->stud_name}}</th> 
 
-    @foreach($groupes_eleves as $groupe_eleve)
-        <tr class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
-            <th scope="row" class="border-2 border-slate-700 @if($groupe_eleve->id % 2) bg-green-400 @else bg-green-300 @endif">{{$groupe_eleve->stud_name}}</th> 
+                <th class="text-center border-2 border-slate-700">
+                    <input type="checkbox" name="periode1_{{$groupe_eleve->id}}"
+                        @foreach($absences as $absence)
+                            @if($groupe_eleve->id == $absence->group_stud_id)
+                                @foreach($periodes as $periode)
+                                    @if($periode->per_heure == '8h35-9h15' && $periode->id == $absence->per_id)
+                                        checked 
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    >
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="description1_{{$groupe_eleve->id}}">
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input type="checkbox" name="periode2_{{$groupe_eleve->id}}"
+                        @foreach($absences as $absence)
+                            @if($groupe_eleve->id == $absence->group_stud_id)
+                                @foreach($periodes as $periode)
+                                    @if($periode->per_heure == '9h15-10h30' && $periode->id == $absence->per_id)
+                                        checked 
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    >
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="description2_{{$groupe_eleve->id}}">
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input type="checkbox" name="periode3_{{$groupe_eleve->id}}"
+                        @foreach($absences as $absence)
+                            @if($groupe_eleve->id == $absence->group_stud_id)
+                                @foreach($periodes as $periode)
+                                    @if($periode->per_heure == '10h45-11h45' && $periode->id == $absence->per_id)
+                                        checked 
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    >
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="description3_{{$groupe_eleve->id}}">
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input type="checkbox" name="periode4_{{$groupe_eleve->id}}"
+                        @foreach($absences as $absence)
+                            @if($groupe_eleve->id == $absence->group_stud_id)
+                                @foreach($periodes as $periode)
+                                    @if($periode->per_heure == '1h00-2h15' && $periode->id == $absence->per_id)
+                                        checked 
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    >
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="description4_{{$groupe_eleve->id}}">
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input type="checkbox" name="periode5_{{$groupe_eleve->id}}"
+                        @foreach($absences as $absence)
+                            @if($groupe_eleve->id == $absence->group_stud_id)
+                                @foreach($periodes as $periode)
+                                    @if($periode->per_heure == '2h30-3h15' && $periode->id == $absence->per_id)
+                                        checked 
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    >
+                </th>
+                <th class="text-center border-2 border-slate-700">
+                    <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="description5_{{$groupe_eleve->id}}">
+                </th>
 
-            <th class="text-center border-2 border-slate-700">
-                <input type="checkbox"
-                @foreach($absences as $absence)
-
-                @endforeach>
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input type="checkbox">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input type="checkbox">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input type="checkbox">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input type="checkbox">
-            </th>
-            <th class="text-center border-2 border-slate-700">
-                <input class="@if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text">
-            </th>
-
-        </tr>
-    @endforeach
+            </tr>
+        @endforeach
+    </form>
 </table>

@@ -28,6 +28,7 @@ Route::get('/accueil', [CommunController::class, 'read']);
 
 // Absences
 Route::get('/absences', [AbsencesController::class, 'read']);
+Route::post('/absences-save', [AbsencesController::class, 'save'])->name("absences-save");
 
 // Notes
 Route::get('/notes', [NotesController::class, 'read']);

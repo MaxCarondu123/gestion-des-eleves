@@ -24,7 +24,7 @@
 
                 @endforeach
             </select>  
-            <a href="{{route('notes-save')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Enregistrer</button></a>  
+            <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" form="formSave">Enregistrer</button>
             <a href="{{route('notes-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>
             <span class="text-red-500">{{Session::get('updateFail')}}</span>
