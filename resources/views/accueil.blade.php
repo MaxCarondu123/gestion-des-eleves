@@ -6,141 +6,328 @@
 
     <div class="col-span-5">
         <div class="flex justify-center items-center h-16">
-            <h1 class="font-bold text-2xl">Date aujourd'hui</h1>
+            <h1 class="font-bold text-2xl">Date: @if(Session::has('selectdate')) {{Session::get('selectdate')}} @else {{date('d-m-y');}} @endif</h1>
         </div>
 
-        
-        <div class="grid grid-cols-2 gab-4 px-16 pt-4">
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">8h35-9h15</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
+        <form action="{{route('accueil-save')}}" method="post" id="formSave">    
+            @csrf
+            <div class="grid grid-cols-2 gap-4 px-16 pt-4">
                 
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div>                 
+                <!--8h35-9h15-->
+                <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-amber-200 rounded">8h35-9h15</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe1">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '8h35-9h15')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea class="text-left" name="note1" cols="80" placeholder="Notes...">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '8h35-9h15')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
+                 <!--9h15-10h30-->
+                 <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-amber-200 rounded">9h15-10h30</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe2">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '9h15-10h30')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note2" cols="80" rows="10">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '9h15-10h30')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
+                <!--10h45-11h45-->
+                <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-amber-200 rounded">10h45-11h45</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe3"">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '10h45-11h45')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note3" cols="80" rows="10">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '10h45-11h45')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
+                <!--Diner-->
+                <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-blue-300 rounded">Diner</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe4">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '11h45-1h00')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note4" cols="80" placeholder="Notes..." >
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '11h45-1h00')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
+                <!--1h00-2h15-->
+                <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-teal-100 rounded">1h00-2h15</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe5">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '1h00-2h15')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note5" cols="80" rows="10">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '1h00-2h15')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>                
+
+                <!--2h30-3h15-->
+                <div class="border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-teal-100 rounded">2h30-3h15</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe6">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '2h30-3h15')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note6" cols="80" rows="10">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '2h30-3h15')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
+                <!--Soir-->
+                <div class="col-span-2 border-2 border-zinc-400 rounded h-40">
+                    <!--Titre-->
+                    <h2 class="text-center h-8 bg-blue-300 rounded">Soir</h2>
+
+                    <!--DropDown Liste-->
+                    <div class="text-center">
+                        <label>Groupes:</label>
+                        <select name="groupe7">
+                            @foreach($groupes_matieres as $groupe_matiere)
+                                <option
+                                    @foreach($periodes as $periode)
+                                        @if($periode->per_heure == '3h15-5h00')
+                                            @foreach($sess_grmats as $sess_grmat)
+                                                @if($periode->sess_grmat_id == $sess_grmat->id)
+                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        @endif 
+                                    @endforeach
+                                >
+                                    {{$groupe_matiere->groupmat_name}}
+                                </option>
+                            @endforeach
+                            
+                                                
+                        </select>
+                    </div>
+                    
+                    <!--Input texte-->   
+                    <div class="flex justify-center h-20 my-2 mx-4">
+                        <textarea name="note7" cols="80" rows="10">
+                            @foreach($periodes as $periode)
+                                @if($periode->per_heure == '3h15-5h00')
+                                    {{$periode->per_notes}}
+                                @endif
+                            @endforeach
+                        </textarea>   
+                    </div>                 
+                </div>
+
             </div>
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">Diner</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">9h15-10h30</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">1h00-2h15</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">10h45-11h45</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>
-            <div class="border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">2h30-3h15</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>
-            <div class="col-span-2 border-2 border-zinc-400 rounded h-40">
-                <!--Titre-->
-                <h2 class="text-center h-8 bg-blue-300 rounded">Soir</h2>
-
-                <!--DropDown Liste-->
-                <div class="text-center">
-                    <label for="">Groupes:</label>
-                    <select name="" id="">
-
-                    </select>
-                </div>
-                
-                <!--Input texte-->   
-                <div class="flex justify-center h-20 my-2 mx-4">
-                    <input class="w-full h-full" type="text">       
-                </div> 
-            </div>                            
         </div>
-    </div>
-
+    </form>  
     <div class="bg-blue-200">
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
             <div class="border-2 border-black mb-6"></div>
-            <label for="">Date:</label>
-            <select class="text-center py-2 mb-6 w-full bg-green-400 rounded-3xl" name="" id="">
+            <form action="{{route('accueil-changedate')}}" method="get">
+                <label class="flex justify-center rounded-3xl">Selection d'une date:</label>
+                <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date">
+                <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit">Changer la date</button>
+            </form>
 
-            </select>  
+            <div class="border-2 border-black mb-6"></div>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" form="formSave">Enregistrer</button>
             <a href="{{route('notes-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>

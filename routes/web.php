@@ -9,6 +9,7 @@ use App\Http\Controllers\ElevesGroupesController;
 use App\Http\Controllers\CommunController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\ExamensTravauxController;
+use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\PeriodesController;
 
@@ -24,7 +25,9 @@ Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('c
 
 //----------- Courante -----------
 // Accueil
-Route::get('/accueil', [CommunController::class, 'read']);
+Route::get('/accueil', [HoraireController::class, 'read']);
+Route::post('/accueil-save', [HoraireController::class, 'save'])->name("accueil-save");
+Route::get('/accueil-changedate', [HoraireController::class, 'ChangeDate'])->name("accueil-changedate");
 
 // Absences
 Route::get('/absences', [AbsencesController::class, 'read']);
