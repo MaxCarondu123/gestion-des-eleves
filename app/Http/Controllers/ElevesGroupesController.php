@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class ElevesGroupesController extends Controller
 {
-    public function create(){
-
-    }
-
     public function update(Request $request){
         if(session()->exists('elevesrowselect')){
             //Valider les champs
@@ -45,13 +41,10 @@ class ElevesGroupesController extends Controller
         $elevesGroupes = DB::table('groupes_eleves')->get();
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
+        //session()->flush('multipleeleverowselect');
 
         //Retourne vue session
         return view("elevesgroupes", ['eleves' => $eleves, 'elevesgroupes' => $elevesGroupes, 'groupes_matieres' => $groupes_matieres]);
-    }
-
-    public function delete(){
-        
     }
 
     public function save(Request $request){
@@ -96,20 +89,18 @@ class ElevesGroupesController extends Controller
     public function cancel(){
         session()->flush('nbrgroupmatbd');
         session()->flush('nbrgroupmatvide');
-        
-        //Desactiver bouton enregistrer
-        //$btnEnregistrer = true;
-        //session(['btnenregistrer' => $btnEnregistrer]);
+        session()->flush('multipleeleverowselect');
 
         //Retourne vue session
         return redirect('elevesgroupes');  
     }
 
     public function SelectElevesRow($studId){
+        session()->flush('multipleeleverowselect'); 
         session(['elevesrowselect' => $studId]);
 
         //Retourne vue session
-        return redirect('elevesgroupes'); 
+        return redirect('elevesgroupes');       
     }
 
     public function SelectGrMatRow($grMatId){
@@ -117,6 +108,29 @@ class ElevesGroupesController extends Controller
 
         //Retourne vue session
         return redirect('elevesgroupes'); 
+    }
+
+    public function multipleSelectElevesRow($eleveId){
+        $array = session('multipleeleverowselect');
+        session()->flush('elevesrowselect');
+        
+        $contientDeja = false;
+        if($array){
+            foreach($array as $element){
+                if($element == $eleveId){
+                    $contientDeja = true;
+                }
+            }
+        }
+          
+        if($contientDeja == false){
+            $array[] = $eleveId;
+        }
+            
+        session(['multipleeleverowselect' => $array]);
+
+        //Retourne vue session
+        return redirect('elevesgroupes');  
     }
 
     public function ElevesDelete($studId){
@@ -142,11 +156,14 @@ class ElevesGroupesController extends Controller
     }
 
     public function addEleveGroup(){
-        $eleveGroup = new groupes_eleves();
-        $eleveGroup->groupmat_id = session('grMatrowselect');
-        $eleveGroup->stud_id = session('elevesrowselect');
+        $array = session('multipleeleverowselect');
+        foreach($array as $element){  
+            $eleveGroup = new groupes_eleves();
+            $eleveGroup->groupmat_id = session('grMatrowselect');
+            $eleveGroup->stud_id = $element;
 
-        $res = $eleveGroup->save();
+            $res = $eleveGroup->save();
+        }
 
         //Retourne vue session
         return redirect('elevesgroupes');

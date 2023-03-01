@@ -7,7 +7,7 @@
       @foreach($examens_travaux as $examen_travail)
         <th colspan="2" scope="colgroup" class="border-2 border-slate-700 @if(Session::get('updateid') == $examen_travail->id) bg-amber-300 @endif">
             {{$examen_travail->extr_name}}
-            <a class="mr-6" href="{{route('notes-updateligne', ['id'=> $examen_travail->id])}}"><button onclick="InputDisable({{$examen_travail->id}})"><i class="fa-solid fa-square-check"></i></button></a>
+            <a class="mr-6" href="{{route('notes-updateligne', ['id'=> $examen_travail->id])}}"><button onclick="InputDisable({{$examen_travail->id}})"><i class="fa-solid fa-pen"></i></button></a>
         </th>
       @endforeach 
     </tr>

@@ -26,14 +26,11 @@
                                 <form action="{{route('groupessessions-update')}}" method="post" id="formMettreAJour">  
                                     @csrf  
                                     @foreach ($groupes_matieres as $groupe_matiere)
-                                        {{print_r(Session::get('multiplegroupmatrowselect'))}}
                                         @php $selectRow = false; @endphp 
                                         @if(Session::has('multiplegroupmatrowselect')) 
                                             @foreach(Session::get('multiplegroupmatrowselect') as $groupId)        
                                                 @if($groupId == $groupe_matiere->id) 
-                                                    @php $selectRow = true; @endphp   
-                                                @else
-                                                    @php $selectRow = false; @endphp                                         
+                                                    @php $selectRow = true; @endphp                                       
                                                 @endif 
                                             @endforeach
                                         @endif
@@ -110,6 +107,8 @@
             <div class="flex w-1/4 h-full bg-blue-200">
                 <div class="flex items-center">
                     <div class="mx-12">
+                        <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
+                        <div class="border-2 border-black mb-6"></div> 
                         <a href="{{route('groupessessions-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe</button></a>
                         <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter le ou les groupes a la session</button></a>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>
@@ -189,7 +188,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($sessions as $session)
-                                    <tr class="@if(Session::get('sessionsrowselect') == $session->id) bg-amber-300 @elseif($session->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                    <tr class="@if(Session::get('sessionsrowselect') == $session->id) bg-cyan-300 @elseif($session->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
                                         <th class="border-2 border-slate-700">{{$session->sess_num}}</th>
                                         <th class="border-2 border-slate-700">{{$session->sess_startdate}}</th>
                                         <th class="border-2 border-slate-700">{{$session->sess_enddate}}</th>

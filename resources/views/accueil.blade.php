@@ -326,7 +326,6 @@
                 <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date">
                 <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit">Changer la date</button>
             </form>
-
             <div class="border-2 border-black mb-6"></div>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" form="formSave">Enregistrer</button>
             <a href="{{route('accueil-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>

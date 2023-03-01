@@ -11,7 +11,16 @@
         <form action="{{route('elevesgroupes-update')}}" method="post" id="formMettreAJour">
             @csrf
             @foreach ($eleves as $eleve)
-                <tr class="@if(Session::get('elevesrowselect') == $eleve->id) bg-amber-300 @elseif($eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                @php $selectRow = false; @endphp 
+                @if(Session::has('multipleeleverowselect')) 
+                    @foreach(Session::get('multipleeleverowselect') as $eleveId)        
+                        @if($eleveId == $eleve->id) 
+                            @php $selectRow = true; @endphp                                       
+                        @endif 
+                    @endforeach
+                @endif
+
+                <tr class="@if($selectRow == true) bg-cyan-300 @elseif(Session::get('elevesrowselect') == $eleve->id) bg-amber-300 @elseif($eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
                     <th class="border-2 border-slate-700">
                         @if(Session::get('elevesrowselect') == $eleve->id)
                             <input class="w-24 text-center bg-amber-300" type="text" value="{{$eleve->stud_name}}" name="nom">
@@ -36,7 +45,8 @@
                     <th class="border-2 border-slate-700">
                         <div class="flex justify-evenly">
                             <a href="{{route('elevesgroupes-elevessupp', ['studid'=> $eleve->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
-                            <a href="{{route('elevesgroupes-selectelevesrow', ['studid'=> $eleve->id])}}"><i class="fa-solid fa-square-check"></i></a>
+                            <a href="{{route('elevesgroupes-selectelevesrow', ['studid'=> $eleve->id])}}"><i class="fa-solid fa-pen"></i></a>
+                            <a href="{{route('elevesgroupes-multipleselectelevesrow', ['studid'=> $eleve->id])}}"><i class="fa-solid fa-square-check"></i></a>
                         </div>                                           
                     </th>
                 </tr>

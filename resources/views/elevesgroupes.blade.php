@@ -21,8 +21,10 @@
             <div class="flex w-1/4 h-full bg-blue-200">
                 <div class="flex items-center">
                     <div class="mx-12">
+                        <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
+                        <div class="border-2 border-black mb-6"></div> 
                         <a href="{{route('elevesgroupes-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve</button></a>
-                        <a href="{{route('elevesgroupes-ajouterEleveGroup')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un eleve au groupe</button></a>
+                        <a href="{{route('elevesgroupes-ajouterEleveGroup')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter le ou les eleves au groupe</button></a>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>
                         <a href="{{route('elevesgroupes-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>

@@ -55,17 +55,18 @@ class NotesController extends Controller
     }
     
     public function read(){
-        $notes = DB::table('notes')->get();
+        $notes = DB::table('notes')->get(); 
 
             //print_r($notes);
             //dd($notes);
 
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
-
+        
         $groupes_eleves = DB::table('groupes_eleves')
-            ->join('eleves', 'eleves.id', '=', 'groupes_eleves.stud_id')
-            ->get();
+                                ->where('groupmat_id', '=', session('groupidselect'))
+                                ->join('eleves', 'eleves.id', '=', 'groupes_eleves.stud_id')
+                                ->get();
 
         $eleves = DB::table('eleves')->get();
 
@@ -90,6 +91,13 @@ class NotesController extends Controller
         session()->flush('idsuivant');
         session()->flush('updateid');
     
+        //Retourne vue session
+        return redirect('notes'); 
+    }
+
+    public function changeGroupe($groupId){
+        session(['groupidselect' => $groupId]);
+
         //Retourne vue session
         return redirect('notes'); 
     }

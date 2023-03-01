@@ -113,22 +113,18 @@ class GroupesSessionsController extends Controller
     }
 
     public function mutlipleSelectGroupMatRow($groupMatId){
+        $array = session('multiplegroupmatrowselect');
         session()->flush('groupmatrowselect');
-        $array = [];
-        print_r('testdebut');
-        print_r(session()->all('multiplegroupmatrowselect'));
+        
         $contientDeja = false;
-        if(session()->exists('multiplegroupmatrowselect')){
-            print_r('test');
-            $array = session('multiplegroupmatrowselect');
-
+        if($array){
             foreach($array as $element){
                 if($element == $groupMatId){
                     $contientDeja = true;
                 }
             }
         }
-
+          
         if($contientDeja == false){
             $array[] = $groupMatId;
         }
@@ -136,16 +132,19 @@ class GroupesSessionsController extends Controller
         session(['multiplegroupmatrowselect' => $array]);
 
         //Retourne vue session
-        //return redirect('groupessessions');  
+        return redirect('groupessessions');  
     }
 
     public function addGroupSess(){
-        //Associer un groupe a la session
-        $sessGrMat = new sess_grmats();
-        $sessGrMat->sess_id = session('sessionsrowselect');
-        $sessGrMat->groupmat_id = session('groupmatrowselect');
+        $array = session('multiplegroupmatrowselect');
+        foreach($array as $element){      
+            //Associer un groupe a la session
+            $sessGrMat = new sess_grmats();
+            $sessGrMat->sess_id = session('sessionsrowselect');
+            $sessGrMat->groupmat_id = $element;
 
-        $res = $sessGrMat->save();
+            $res = $sessGrMat->save();
+        }
 
         //Retourne vue session
         return redirect('groupessessions');

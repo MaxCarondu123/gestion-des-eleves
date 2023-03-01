@@ -43,6 +43,7 @@ Route::get('/notes-supp/{id}', [NotesController::class, 'delete'])->name("notes-
 Route::get('/notes-updateligne/{id}', [NotesController::class, 'updateRow'])->name("notes-updateligne");
 Route::post('/notes-update', [NotesController::class, 'update'])->name("notes-update");
 Route::post('/notes-save', [NotesController::class, 'save'])->name("notes-save");
+Route::get('/notes-changegroupe/{groupid}', [NotesController::class, 'changeGroupe'])->name('notes-changegroupe');
 
 // Examens et travaux
 Route::get('/examenstravaux', [ExamensTravauxController::class, 'read']);
@@ -84,6 +85,7 @@ Route::post('/elevesgroupes-save', [ElevesGroupesController::class, 'save'])->na
 Route::post('/elevesgroupes-update', [ElevesGroupesController::class, 'update'])->name('elevesgroupes-update');
 Route::get('/elevesgroupes-annuler', [ElevesGroupesController::class, 'cancel'])->name('elevesgroupes-annuler');
 Route::get('/elevesgroupes-selectelevesrow/{studid}', [ElevesGroupesController::class, 'selectElevesRow'])->name('elevesgroupes-selectelevesrow');
+Route::get('/elevesgroupes-multipleselectelevesrow/{studid}', [ElevesGroupesController::class, 'multipleSelectElevesRow'])->name('elevesgroupes-multipleselectelevesrow');
 Route::get('/elevesgroupes-selectgrmatsrow/{grmat}', [ElevesGroupesController::class, 'selectGrMatRow'])->name('elevesgroupes-selectgrmatsrow');
 Route::get('/elevesgroupes-ajouterEleveGroup', [ElevesGroupesController::class, 'addEleveGroup'])->name('elevesgroupes-ajouterEleveGroup');
 Route::get('/elevesgroupes-elevessupp/{studid}', [ElevesGroupesController::class, 'ElevesDelete'])->name('elevesgroupes-elevessupp');

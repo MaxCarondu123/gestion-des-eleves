@@ -18,28 +18,15 @@
     <div class="bg-blue-200">
         <div class="pt-16 px-4">
             <h2 class="flex justify-center font-bold text-lg mb-2">Actions</h2>
+            <div class="border-2 border-black mb-6"></div> 
             <label class="flex justify-center rounded-3xl" for="">Etape courante:</label>
             <select class="py-2 mb-6 w-full rounded-3xl" onchange="location = this.value;">              
                 @foreach ($sessions as $session)
                     <option class="text-center" value="{{route('sessions-changecourante', ['sessid'=>$session->id])}}" @if($session->sess_current == true) selected @endif>{{$session->sess_num}}</option>
                 @endforeach
-            </select>
-            <div class="border-2 border-black mb-6"></div>
-            <label class="flex justify-center rounded-3xl">Ajouter des sessions:</label>
-            <select class="text-center py-2 mb-6 w-full rounded-3xl" name="nbrAjouter">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>               
-            <a href="{{route('sessions-ajout')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter</button></a>
-            <div class="border-2 border-black mb-6"></div> 
+            </select> 
+            <div class="border-2 border-black mb-6"></div>             
+            <a href="{{route('sessions-ajout')}}"><button class="py-2 mb-6 w-full bg-green-400 rounded-3xl">Ajouter une ligne</button></a>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>   
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>    
             <a href="{{route('sessions-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>

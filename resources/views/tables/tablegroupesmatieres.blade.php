@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         @foreach ($groupes_matieres as $groupe_matiere)
-            <tr class="@if(Session::get('sessionsrowselect') == $groupe_matiere->id || Session::get('grMatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+            <tr class="@if(Session::get('sessionsrowselect') == $groupe_matiere->id || Session::get('grMatrowselect') == $groupe_matiere->id) bg-cyan-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
                 <th class="border-2 border-slate-700">{{$groupe_matiere->groupmat_mat}}</th>
                 <th class="border-2 border-slate-700">{{$groupe_matiere->groupmat_name}}</th>
                 <th class="border-2 border-slate-700">{{$groupe_matiere->groupmat_num}}</th>
