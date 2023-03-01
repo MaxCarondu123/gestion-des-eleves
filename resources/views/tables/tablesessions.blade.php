@@ -44,8 +44,8 @@
                     </th>
                     <th class="border-2 border-slate-700">
                         <div class="flex justify-evenly">
-                            <a href="{{route('sessions-supp', ['sessid'=>$session->id])}}"><i class="fa-solid fa-trash-can"></i></a>
-                            <a href="{{route('sessions-selectrow', ['sessid'=>$session->id])}}"><i class="fa-solid fa-square-check"></i></a>
+                            <a href="{{route('sessions-supp', ['sessid'=>$session->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{route('sessions-selectrow', ['sessid'=>$session->id])}}"><i class="fa-solid fa-pen"></i></a>
                         </div>
                     </th>
                 </tr>

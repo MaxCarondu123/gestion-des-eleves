@@ -19,7 +19,7 @@ Route::get('/inscription', [ConnexionController::class, 'register']);
 Route::get('/mdpoublier', [ConnexionController::class, 'mdpOublier']);
 Route::post('/connexion-utilisateur', [ConnexionController::class, 'connexionUtilisateur'])->name('connexion-utilisateur');
 Route::post('/inscription-utilisateur', [ConnexionController::class, 'inscriptionUtilisateur'])->name('inscription-utilisateur');
-Route::get('/deconnecter', [ConnexionController::class, 'deconnecter']);
+Route::get('/deconnecter', [ConnexionController::class, 'deconnecter'])->name('deconnecter');
 Route::get('/envoyer-email', [ConnexionController::class, 'envoyerEmail']);
 Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('changer-mdp');
 
@@ -28,6 +28,7 @@ Route::post('/changer-mdp', [ConnexionController::class, 'changerMdp'])->name('c
 Route::get('/accueil', [HoraireController::class, 'read']);
 Route::post('/accueil-save', [HoraireController::class, 'save'])->name("accueil-save");
 Route::get('/accueil-changedate', [HoraireController::class, 'ChangeDate'])->name("accueil-changedate");
+Route::get('/accueil-annuler', [HoraireController::class, 'cancel'])->name('accueil-annuler');
 
 // Absences
 Route::get('/absences', [AbsencesController::class, 'read']);
@@ -71,6 +72,7 @@ Route::post('/groupessessions-update', [GroupesSessionsController::class, 'updat
 Route::get('/groupessessions-annuler', [GroupesSessionsController::class, 'cancel'])->name('groupessessions-annuler');
 Route::get('/groupessessions-selectsessionsrow/{sessid}', [GroupesSessionsController::class, 'selectSessionsRow'])->name('groupessessions-selectsessionsrow');
 Route::get('/groupessessions-selectgroupmatrow/{groupmatid}', [GroupesSessionsController::class, 'selectGroupMatRow'])->name('groupessessions-selectgroupmatrow');
+Route::get('/groupessessions-mutlipleselectgroupmatrow/{groupmatid}', [GroupesSessionsController::class, 'mutlipleSelectGroupMatRow'])->name('groupessessions-mutlipleselectgroupmatrow');
 Route::get('/groupessessions-ajouterGroupSess', [GroupesSessionsController::class, 'addGroupSess'])->name('groupessessions-ajouterGroupSess');
 Route::get('/groupessessions-groupmatsupp/{groupmatid}', [GroupesSessionsController::class, 'groupMatDelete'])->name('groupessessions-groupmatsupp');
 Route::get('/groupessessions-groupsesssupp/{groupsessid}', [GroupesSessionsController::class, 'groupSessDelete'])->name('groupessessions-groupsesssupp');

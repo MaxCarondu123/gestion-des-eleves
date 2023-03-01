@@ -35,7 +35,7 @@
                     </th>
                     <th class="border-2 border-slate-700">
                         <div class="flex justify-evenly">
-                            <a href="{{route('elevesgroupes-elevessupp', ['studid'=> $eleve->id])}}"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{route('elevesgroupes-elevessupp', ['studid'=> $eleve->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
                             <a href="{{route('elevesgroupes-selectelevesrow', ['studid'=> $eleve->id])}}"><i class="fa-solid fa-square-check"></i></a>
                         </div>                                           
                     </th>

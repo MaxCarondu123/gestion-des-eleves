@@ -23,7 +23,9 @@
                         @endif
                     @endforeach
                 </th>
-                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('elevesgroupes-elevesgroupsesssupp', ['elevegroupsesid'=>$elevegroupe->id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
+                <th class="border-2 border-slate-700 @if($elevegroupe->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                    <a href="{{route('elevesgroupes-elevesgroupsesssupp', ['elevegroupsesid'=>$elevegroupe->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
+                </th>
             </tr>
         @endforeach 
     </tbody>

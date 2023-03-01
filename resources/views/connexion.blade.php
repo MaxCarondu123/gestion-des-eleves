@@ -1,7 +1,13 @@
 @include('layouts.head')
 
     <body>
+        @if(Session::has('userInscrit') || Session::has('userMDPChanger') || Session::has('userDeco'))
+            <div class="text-center bg-emerald-100">
+                <span class="text-green-800 w-full">{{Session::get('userInscrit')}}{{Session::get('userMDPChanger')}}{{Session::get('userDeco')}}</span>
+            </div>      
+        @endif
         <main class="flex items-center justify-center h-screen bg-neutral-200">
+            
             <div class="bg-zinc-50 h-3/6 w-1/4">             
                 <form class="px-8 py-12" action="{{route('connexion-utilisateur')}}" method="post">
                     @if(Session::has('userFail'))

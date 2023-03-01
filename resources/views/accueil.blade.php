@@ -3,7 +3,6 @@
 @include('layouts.menu')
 
 <div class="flex h-full grid grid-cols-6 bg-gray-100">
-
     <div class="col-span-5">
         <div class="flex justify-center items-center h-16">
             <h1 class="font-bold text-2xl">Date: @if(Session::has('selectdate')) {{Session::get('selectdate')}} @else {{date('d-m-y');}} @endif</h1>
@@ -46,7 +45,8 @@
                     
                     <!--Input texte-->   
                     <div class="flex justify-center h-20 my-2 mx-4">
-                        <textarea class="text-left" name="note1" cols="80" placeholder="Notes...">
+                        <input type="text" name="note1">
+                        <textarea class="text-left"  cols="80" placeholder="Notes...">
                             @foreach($periodes as $periode)
                                 @if($periode->per_heure == '8h35-9h15')
                                     {{$periode->per_notes}}
@@ -329,7 +329,7 @@
 
             <div class="border-2 border-black mb-6"></div>
             <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" form="formSave">Enregistrer</button>
-            <a href="{{route('notes-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
+            <a href="{{route('accueil-annuler')}}"><button class="py-2 mb-6 w-full bg-red-300 rounded-3xl">Annuler</button></a>
             <span class="text-red-500">{{Session::get('rowFail')}}</span>
             <span class="text-red-500">{{Session::get('updateFail')}}</span>
             <span class="text-red-500">@error('nom')<i class="w-4 fa-solid fa-exclamation text-center"></i> {{$message}} @enderror</span><br>

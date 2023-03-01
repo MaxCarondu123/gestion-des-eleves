@@ -26,23 +26,52 @@
                                 <form action="{{route('groupessessions-update')}}" method="post" id="formMettreAJour">  
                                     @csrf  
                                     @foreach ($groupes_matieres as $groupe_matiere)
-                                        <tr class="@if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                        {{print_r(Session::get('multiplegroupmatrowselect'))}}
+                                        @php $selectRow = false; @endphp 
+                                        @if(Session::has('multiplegroupmatrowselect')) 
+                                            @foreach(Session::get('multiplegroupmatrowselect') as $groupId)        
+                                                @if($groupId == $groupe_matiere->id) 
+                                                    @php $selectRow = true; @endphp   
+                                                @else
+                                                    @php $selectRow = false; @endphp                                         
+                                                @endif 
+                                            @endforeach
+                                        @endif
+
+                                        <tr class="@if($selectRow == true) bg-cyan-300 @elseif(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
                                             <th class="border-2 border-slate-700">
-                                                <input class="w-24 text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_mat}}" name="matiere">
+                                                @if(Session::get('groupmatrowselect') == $groupe_matiere->id)
+                                                    <input class="w-24 text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_mat}}" name="matiere">
+                                                @else
+                                                    {{$groupe_matiere->groupmat_mat}}
+                                                @endif
                                             </th>
                                             <th class="border-2 border-slate-700">
-                                                <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_name}}" name="nom">
+                                                @if(Session::get('groupmatrowselect') == $groupe_matiere->id)
+                                                    <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_name}}" name="nom">
+                                                @else
+                                                    {{$groupe_matiere->groupmat_name}}
+                                                @endif                                       
                                             </th>
                                             <th class="border-2 border-slate-700">
-                                                <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_num}}" name="numero">
+                                                @if(Session::get('groupmatrowselect') == $groupe_matiere->id)
+                                                    <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_num}}" name="numero">
+                                                @else
+                                                    {{$groupe_matiere->groupmat_num}}
+                                                @endif                               
                                             </th>
                                             <th class="border-2 border-slate-700">
-                                                <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_description}}" name="description">
+                                                @if(Session::get('groupmatrowselect') == $groupe_matiere->id)
+                                                    <input class="text-center @if(Session::get('groupmatrowselect') == $groupe_matiere->id) bg-amber-300 @elseif($groupe_matiere->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" value="{{$groupe_matiere->groupmat_description}}" name="description"> 
+                                                @else
+                                                    {{$groupe_matiere->groupmat_description}}
+                                                @endif                                              
                                             </th>
                                             <th class="border-2 border-slate-700">
                                                 <div class="flex justify-evenly">
-                                                    <a href="{{route('groupessessions-groupmatsupp', ['groupmatid'=>$groupe_matiere->id])}}"><i class="fa-solid fa-trash-can"></i></a>
-                                                    <a href="{{route('groupessessions-selectgroupmatrow', ['groupmatid'=>$groupe_matiere->id])}}"><i class="fa-solid fa-square-check"></i></a>
+                                                    <a href="{{route('groupessessions-groupmatsupp', ['groupmatid'=>$groupe_matiere->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
+                                                    <a href="{{route('groupessessions-selectgroupmatrow', ['groupmatid'=>$groupe_matiere->id])}}"><i class="fa-solid fa-pen"></i></a>
+                                                    <a href="{{route('groupessessions-mutlipleselectgroupmatrow', ['groupmatid'=>$groupe_matiere->id])}}"><i class="fa-solid fa-square-check"></i></a>
                                                 </div>                                           
                                             </th>
                                         </tr>
@@ -82,7 +111,7 @@
                 <div class="flex items-center">
                     <div class="mx-12">
                         <a href="{{route('groupessessions-ajout')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe</button></a>
-                        <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter un groupe a la session</button></a>
+                        <a href="{{route('groupessessions-ajouterGroupSess')}}"><button class="w-full py-2 mb-6 bg-green-400 rounded-3xl">Ajouter le ou les groupes a la session</button></a>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formMettreAJour">Mettre a jour</button>
                         <button class="w-full py-2 mb-6 bg-green-400 rounded-3xl" type="submit" form="formEnregistrer">Enregistrer</button>
                         <a href="{{route('groupessessions-annuler')}}"><button class="w-full py-2 mb-6 bg-red-300 rounded-3xl">Annuler</button></a>
@@ -130,7 +159,9 @@
                                                 @endif
                                             @endforeach
                                         </th>
-                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif"><a href="{{route('groupessessions-groupsesssupp', ['groupsessid'=>$sess_grmat->id])}}"><i class="fa-solid fa-trash-can"></i></a></th>
+                                        <th class="border-2 border-slate-700 @if($sess_grmat->id % 2) bg-zinc-300 @else bg-zinc-200 @endif">
+                                            <a href="{{route('groupessessions-groupsesssupp', ['groupsessid'=>$sess_grmat->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
+                                        </th>
                                     </tr>
                                 @endforeach 
                             </tbody>

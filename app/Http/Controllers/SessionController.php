@@ -10,24 +10,21 @@ use App\Http\Controllers\CommunController;
 
 class SessionController extends Controller
 {
-    public function create(){
-
-    }
-
     public function update(Request $request){
         if(session()->exists('updateid')){
+            //Valider les champs
             self::validerChamps($request);
 
-            //Chercher les infos de l'utilisteurs
+            //Chercher les infos de la sessions
             $session = sessions::find(session('updateid'));
             $session->sess_num = $request->etape;
             $session->sess_startdate = $request->datedebut;
             $session->sess_enddate = $request->datefin;
 
-            //Requete sql pour entrer les informations
+            //Requete sql pour mettre a jour les informations
             $res = $session->update();
         }else{
-            //Fail password retour a la page
+            //Fail de la mise a jour retour a la page
             return back()->with('updateFail', "Veuillez selectionner une ligne a modifier");
         }
 
@@ -38,16 +35,15 @@ class SessionController extends Controller
     public function read(){
         $sessions = DB::table('sessions')->get();
 
-
-        //print_r(Schema::getColumnListing('sessions'));
-
         return view('sessions', ['sessions' => $sessions]);
     }
 
     public function delete($sessId){
         //Valider que la session existe
         $session = sessions::where('id', '=' ,$sessId)->first();
+
         if($session){
+            //Requete sql pour supprimer la session
             sessions::where('id', '=' ,$sessId)->delete();
 
             //Retourne vue session
@@ -56,9 +52,10 @@ class SessionController extends Controller
     }
 
     public function save(Request $request){
+        //Valider les champs
         self::validerChamps($request);
 
-        //Chercher les infos de l'utilisteurs
+        //Chercher les infos de la session
         $session = new sessions();
         $session->sess_num = $request->etape;
         $session->sess_startdate = $request->datedebut;
@@ -68,6 +65,7 @@ class SessionController extends Controller
         
         //Verifier si une session courante
         $sessionCourante = sessions::where('sess_current', '=', true)->first();
+
         if($sessionCourante){
             //Enlever la session qui etait courante
             sessions::where('id', '=', $sessionCourante->id)->update(['sess_current' => false]);
@@ -104,10 +102,6 @@ class SessionController extends Controller
     public function cancel(){
         session()->flush('nbrsessions');
         session()->flush('nbrsessionsvide');
-        
-        //Desactiver bouton enregistrer
-        $btnEnregistrer = true;
-        session(['btnenregistrer' => $btnEnregistrer]);
 
         //Retourne vue session
         return redirect('sessions'); 

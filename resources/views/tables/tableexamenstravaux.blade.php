@@ -60,7 +60,7 @@
                     </th>
                     <th class="border-2 border-slate-700">
                         <div class="flex justify-evenly">
-                            <a href="{{route('examenstravaux-supp', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-trash-can"></i></a>
+                            <a href="{{route('examenstravaux-supp', ['id'=> $examen_travail->id])}}" onclick="return confirm('Etes-vous sur de supprimer?')"><i class="fa-solid fa-trash-can"></i></a>
                             <a href="{{route('examenstravaux-updateligne', ['id'=> $examen_travail->id])}}"><i class="fa-solid fa-square-check"></i></a>            
                         </div>
                     </th>
