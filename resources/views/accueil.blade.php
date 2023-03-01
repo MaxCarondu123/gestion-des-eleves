@@ -2,10 +2,14 @@
 @include('layouts.navigation')
 @include('layouts.menu')
 
+
+
 <div class="flex h-full grid grid-cols-6 bg-gray-100">
     <div class="col-span-5">
         <div class="flex justify-center items-center h-16">
-            <h1 class="font-bold text-2xl">Date: @if(Session::has('selectdate')) {{Session::get('selectdate')}} @else {{date('d-m-y');}} @endif</h1>
+            <h1 class="font-bold text-2xl">
+                Date: @if(Session::has('selectdate')) {{Session::get('selectdate')}} @else {{(20 . date('y-m-d'));}} @endif
+            </h1>
         </div>
 
         <form action="{{route('accueil-save')}}" method="post" id="formSave">    
@@ -323,7 +327,7 @@
             <div class="border-2 border-black mb-6"></div>
             <form action="{{route('accueil-changedate')}}" method="get">
                 <label class="flex justify-center rounded-3xl">Selection d'une date:</label>
-                <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date">
+                <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date" @if(Session::has('selectdate')) value="{{Session::get('selectdate')}}" @else value="{{(20 . date('y-m-d'))}}" @endif>
                 <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit">Changer la date</button>
             </form>
             <div class="border-2 border-black mb-6"></div>

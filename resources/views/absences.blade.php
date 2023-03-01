@@ -21,12 +21,13 @@
             <label class="flex justify-center rounded-3xl" >Nom du groupe:</label>
             <select class="py-2 mb-6 w-full rounded-3xl" onchange="location = this.value;">
                 @foreach ($groupes_matieres as $groupe_matiere)
-                    <option class="text-center" value="{{route('notes-changegroupe', ['groupid'=>$groupe_matiere->id])}}" @if(Session::get('groupidselect') == $groupe_matiere->id) selected @endif>{{$groupe_matiere->groupmat_name}}</option>
+                    <option class="text-center" value="{{route('absences-changegroupe', ['groupid'=>$groupe_matiere->id])}}" @if(Session::get('groupidselect') == $groupe_matiere->id) selected @endif>{{$groupe_matiere->groupmat_name}}</option>
                 @endforeach
             </select>
-            <form action="{{route('accueil-changedate')}}" method="get">
+            <form action="{{route('absences-changedate')}}" method="get">
+                @csrf
                 <label class="flex justify-center rounded-3xl">Selection d'une date:</label>
-                <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date" value="2023-08-02">
+                <input class="text-center py-2 mb-6 w-full rounded-3xl" type="date" name="date" @if(Session::has('selectdate')) value="{{Session::get('selectdate')}}" @else value="{{(20 . date('y-m-d'))}}" @endif>
                 <button class="py-2 mb-6 w-full bg-green-400 rounded-3xl" type="submit">Changer la date</button>
             </form>     
             <div class="border-2 border-black mb-6"></div> 

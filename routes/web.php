@@ -33,6 +33,8 @@ Route::get('/accueil-annuler', [HoraireController::class, 'cancel'])->name('accu
 // Absences
 Route::get('/absences', [AbsencesController::class, 'read']);
 Route::post('/absences-save', [AbsencesController::class, 'save'])->name("absences-save");
+Route::get('/absences-changegroupe/{groupid}', [AbsencesController::class, 'changeGroupe'])->name('absences-changegroupe');
+Route::get('/absences-changedate', [AbsencesController::class, 'ChangeDate'])->name("absences-changedate");
 
 // Notes
 Route::get('/notes', [NotesController::class, 'read']);
