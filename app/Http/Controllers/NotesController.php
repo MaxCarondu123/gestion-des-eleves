@@ -17,17 +17,23 @@ class NotesController extends Controller
             ->get();
 
         foreach($groupes_eleves as $groupe_eleve){
+            $examens_travaux = DB::table('examens_travauxes')
+                                ->where('id', '=',  session('updateid'))
+                                ->get()
+                                ->first();
+
             $notes = DB::table('notes')
                                 ->where('group_stud_id', '=', $groupe_eleve->id)
                                 ->where('extr_id', '=', session('updateid'))
                                 ->get()
                                 ->first();
+
             if($notes){
                 $notes = notes::find($notes->id);
                 $notes->group_stud_id = $groupe_eleve->id;//session('connexion');
                 $notes->extr_id = session('updateid');
                 $notes->note_note = $request->get('note_'.$groupe_eleve->id);
-                $notes->note_note100 = 100;
+                $notes->note_note100 = (($request->get('note_'.$groupe_eleve->id) * 100)/$examens_travaux->extr_surcombien);
 
                 //Requete sql pour entrer les informations
                 $res = $notes->update();
@@ -37,21 +43,14 @@ class NotesController extends Controller
                 $notes->group_stud_id = $groupe_eleve->id;//session('connexion');
                 $notes->extr_id = session('updateid');
                 $notes->note_note = $request->get('note_'.$groupe_eleve->id);
-                $notes->note_note100 = 100;
+                $notes->note_note100 = (($request->get('note_'.$groupe_eleve->id) * 100)/$examens_travaux->extr_surcombien);
 
                 $res = $notes->save();
             }
         }
 
-        
-
-
         //Retourner a annuler
         return self::cancel();
-    }
-
-    public function update(){
-
     }
     
     public function read(){
@@ -88,9 +87,8 @@ class NotesController extends Controller
     }
 
     public function cancel(){
-        session()->flush('idsuivant');
-        session()->flush('updateid');
-    
+        session()->forget('updateid');
+
         //Retourne vue session
         return redirect('notes'); 
     }

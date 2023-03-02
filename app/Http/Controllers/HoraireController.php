@@ -23,38 +23,49 @@ class HoraireController extends Controller
     }
 
     public function save(Request $request){
+        $heure = 0;
         for($i = 1; $i <= 7; $i++){
-            $heure = 0;
-
-            switch($request->get('groupe'.$i)){
-                case $request->groupe1;
+            switch($i){
+                case $i == 1;
                     $heure = '8h35-9h15';
                     break;
-                case $request->groupe2;
+                case $i == 2;
                     $heure = '9h15-10h30';
                     break;
-                case $request->groupe3;
+                case $i == 3;
                     $heure = '10h45-11h45';
                     break;
-                case $request->groupe4;
+                case $i == 4;
                     $heure = '11h45-1h00';
                     break;
-                case $request->groupe5;
+                case $i == 5;
                     $heure = '1h00-2h15';
                     break;
-                case $request->groupe6;
+                case $i == 6;
                     $heure = '2h30-3h15';
                     break;
-                case $request->groupe7;
+                case $i == 7;
                     $heure = '3h15-5h00';
                     break;
             }
 
-            $periodes = periodes::where('per_date', '=', session('selectdate'))
-                                ->where('per_heure', '=', $heure)
-                                ->first();
-            print_r($request->get('note'.$i));
-            if($periodes){
+            $periodes = DB::table('periodes')
+                            ->where('per_date', '=', session('selectdate'))
+                            ->where('per_heure', '=', $heure)
+                            ->first();
+            if($periodes == null){
+                //Chercher les infos de l'utilisteurs
+                $periodes = new periodes();
+                $periodes->user_id = 1;//session('connexion');
+                $periodes->sess_grmat_id = 1;
+                $periodes->per_date = session('selectdate');
+                $periodes->per_heure = $heure;
+                $periodes->per_notes = $request->get('note'.$i);
+
+                //Requete sql pour entrer les informations
+                $res = $periodes->save();  
+            }else{           
+                              print_r('test');
                 //Chercher les infos de l'utilisteurs
                 $periodes = periodes::find($periodes->id);
                 $periodes->user_id = 1;//session('connexion');
@@ -65,17 +76,6 @@ class HoraireController extends Controller
 
                 //Requete sql pour entrer les informations
                 $res = $periodes->update();
-            }else{
-                //Chercher les infos de l'utilisteurs
-                $periodes = new periodes();
-                $periodes->user_id = 1;//session('connexion');
-                $periodes->sess_grmat_id = 1;
-                $periodes->per_date = session('selectdate');
-                $periodes->per_heure = $heure;
-                $periodes->per_notes = $request->get('note'.$i);
-
-                //Requete sql pour entrer les informations
-                $res = $periodes->save();
             }  
         } 
         
@@ -89,7 +89,7 @@ class HoraireController extends Controller
     }
 
     public function cancel(){
-        session()->flush('selectdate');
+        session()->forget('selectdate');
     
         //Retourne vue session
         return redirect('accueil'); 

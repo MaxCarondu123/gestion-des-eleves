@@ -63,7 +63,7 @@
                             <option value="F">Fille</option>
                         </select>
                     </th>
-                    <th class="border-2 border-slate-700"><a href="{{route('groupessessions-annuler')}}"><i class="fa-solid fa-trash-can"></i></a></th>
+                    <th class="border-2 border-slate-700"></th>
                 </tr>                  
             @endif
         </form>     

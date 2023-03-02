@@ -41,7 +41,13 @@ class GroupesSessionsController extends Controller
         $groupes_matieres = DB::table('groupes_matieres')->get();
 
         //Requete pour aller chercher les groupes par sessions
-        $sess_grmats = DB::table('sess_grmats')->get();
+        if(session()->exists('sessionsrowselect')){
+            $sess_grmats = DB::table('sess_grmats')
+                                ->where('sess_id', '=', session('sessionsrowselect'))
+                                ->get();
+        }else{
+            $sess_grmats = DB::table('sess_grmats')->get();
+        }
 
         //Requete pour aller chercher les sessions
         $sessions = DB::table('sessions')->get();

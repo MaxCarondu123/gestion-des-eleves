@@ -37,11 +37,20 @@ class ElevesGroupesController extends Controller
     public function read(){
         //Requete pour aller chercher les eleves
         $eleves = DB::table('eleves')->get();
+
         //Requete pour aller chercher les eleves par groupe
-        $elevesGroupes = DB::table('groupes_eleves')->get();
+        if(session()->exists('grMatrowselect')){
+            $elevesGroupes = DB::table('groupes_eleves')
+                                ->where('groupmat_id', '=', session('grMatrowselect'))
+                                ->get();
+        }else{
+            $elevesGroupes = DB::table('groupes_eleves')->get();
+        }
+
+
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
-        //session()->flush('multipleeleverowselect');
+
 
         //Retourne vue session
         return view("elevesgroupes", ['eleves' => $eleves, 'elevesgroupes' => $elevesGroupes, 'groupes_matieres' => $groupes_matieres]);

@@ -6,7 +6,7 @@
       <th rowspan="2" class="border-2 border-slate-700">Nom</th>
       @foreach($examens_travaux as $examen_travail)
         <th colspan="2" scope="colgroup" class="border-2 border-slate-700 @if(Session::get('updateid') == $examen_travail->id) bg-amber-300 @endif">
-            {{$examen_travail->extr_name}}
+            {{$examen_travail->extr_name}} / Pond: {{$examen_travail->extr_pond}}
             <a class="mr-6" href="{{route('notes-updateligne', ['id'=> $examen_travail->id])}}"><button onclick="InputDisable({{$examen_travail->id}})"><i class="fa-solid fa-pen"></i></button></a>
         </th>
       @endforeach 
@@ -41,13 +41,11 @@
                         > 
                     </td>
                     <td class="text-center border-2 border-slate-700">
-                        <input class="text-center @if($groupe_eleve->id % 2) bg-zinc-300 @else bg-zinc-200 @endif" type="text" name="note100" id="note100"
                             @foreach($notes as $note)              
                                 @if($examen_travail->id == $note->extr_id && $groupe_eleve->id == $note->group_stud_id)  
-                                    value="{{$note->note_note100}}"                                                                                                
+                                    {{$note->note_note100}}                                                                                              
                                 @endif
-                            @endforeach
-                        >  
+                            @endforeach 
                     </td>                                   
                 @endforeach
 
@@ -57,16 +55,3 @@
         @endforeach
     </form>
 </table>
-
-<script>
-    function Sortie_input(id){
-        
-    }
-
-    function InputDisable(id){
-        //console.log("test");
-        //document.getElementById('note-1').enable = true;
-
-        //console.log(document.getElementById('note-'+id).value);
-    }
-</script>
