@@ -28,29 +28,24 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '8h35-9h15')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '8h35-9h15')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
                                     {{$groupe_matiere->groupmat_name}}
                                 </option>
                             @endforeach
-                            
-                                                
+                                                                      
                         </select>
+                        
                     </div>
                     
                     <!--Input texte-->   
                     <div class="flex justify-center h-20 my-2 mx-4">
-                        <input type="text" name="note1">
-                        <textarea class="text-left"  cols="80" placeholder="Notes...">
+                        <textarea name="note1" class="text-left"  cols="80" placeholder="Notes...">
                             @foreach($periodes as $periode)
                                 @if($periode->per_heure == '8h35-9h15')
                                     {{$periode->per_notes}}
@@ -72,14 +67,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '9h15-10h30')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '9h15-10h30')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
@@ -115,14 +106,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '10h45-11h45')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '10h45-11h45')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
@@ -158,14 +145,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '11h45-1h00')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '11h45-1h00')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
@@ -201,14 +184,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '1h00-2h15')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '1h00-2h15')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
@@ -244,14 +223,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '2h30-3h15')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '2h30-3h15')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >
@@ -287,14 +262,10 @@
                             @foreach($groupes_matieres as $groupe_matiere)
                                 <option
                                     @foreach($periodes as $periode)
-                                        @if($periode->per_heure == '3h15-5h00')
-                                            @foreach($sess_grmats as $sess_grmat)
-                                                @if($periode->sess_grmat_id == $sess_grmat->id)
-                                                    @if($sess_grmat->groupmat_id == $groupe_matiere->id)
-                                                        selected
-                                                    @endif
-                                                @endif
-                                            @endforeach
+                                        @if($periode->per_date == Session::get('selectdate') && $periode->per_heure == '3h15-5h00')
+                                            @if($periode->sess_grmat_id == $groupe_matiere->id)
+                                                selected
+                                            @endif
                                         @endif 
                                     @endforeach
                                 >

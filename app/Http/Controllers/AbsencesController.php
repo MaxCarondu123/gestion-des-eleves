@@ -42,8 +42,7 @@ class AbsencesController extends Controller
                             ->join('eleves', 'eleves.id', '=', 'groupes_eleves.stud_id')
                             ->get();
                             
-        foreach($groupes_eleves as $groupe_eleve){
-            
+        foreach($groupes_eleves as $groupe_eleve){         
             for($i = 1; $i <= 5; $i++){
                 if($request->get('periode'.$i.'_'.$groupe_eleve->id) == 'on'){
                     switch($i){

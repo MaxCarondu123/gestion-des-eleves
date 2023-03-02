@@ -53,7 +53,7 @@ class ConnexionController extends Controller
                 session(['connexion' => $utilisateur->user_id]);
                 
                 //Allez a l'accueil
-                return redirect('accueil')->with('userConnect', "Bienvenue ".$utilisateur->user_id.",vous etes maintenant connecter.");
+                return redirect('accueil')->with('userConnect', "Bienvenue vous avez ete connecter.");
 
             }else{
                 //Fail password retour a la page
@@ -94,7 +94,7 @@ class ConnexionController extends Controller
             $res = $utilisateur->save();
             if($res){              
                 //Retour page connexion
-                return redirect('connexion')->with('userInscrit', "Votre utilisateur a ete inscrit, vous pouvez maintenant vous connecter");
+                return redirect('connexion')->with('userInscrit', "Votre compte a ete inscrit, vous pouvez maintenant vous connecter.");
 
             }else{
                 //Fail save retour a la page
@@ -152,7 +152,7 @@ class ConnexionController extends Controller
                                 ->update(['user_password' => Hash::make($request->password1)]);
 
                     //Retour page connexion
-                    return redirect('connexion')->with('userMDPChanger', "Votre mot de passe a ete modifier, vous pouvez maintenant vous connecter");
+                    return redirect('connexion')->with('userMDPChanger', "Votre mot de passe a ete modifier, vous pouvez maintenant vous connecter.");
                 }else{
                     //Fail password retour a la page
                     return back()->with('passwordFail', "Les mots de passe ne corresponde pas");

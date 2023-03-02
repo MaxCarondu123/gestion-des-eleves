@@ -16,7 +16,6 @@
             <th scope="col" class="border-2 border-slate-700 @if(Session::get('updateid') == $examen_travail->id) bg-amber-300 @endif">{{$examen_travail->extr_surcombien}}</th>
             <th scope="col" class="border-2 border-slate-700 @if(Session::get('updateid') == $examen_travail->id) bg-amber-300 @endif">100%</th>
         @endforeach
-        <th scope="col" class="border-2 border-slate-700">Note finale</th>
     </tr>
 
 
@@ -49,7 +48,6 @@
                     </td>                                   
                 @endforeach
 
-                <td class="text-center border-2 border-slate-700"></td>
 
             </tr>
         @endforeach

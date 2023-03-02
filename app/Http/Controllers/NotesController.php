@@ -56,9 +56,6 @@ class NotesController extends Controller
     public function read(){
         $notes = DB::table('notes')->get(); 
 
-            //print_r($notes);
-            //dd($notes);
-
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
         
@@ -70,6 +67,11 @@ class NotesController extends Controller
         $eleves = DB::table('eleves')->get();
 
         $examens_travaux = DB::table('examens_travauxes')->get();
+
+        $groupes_matieresFirst = DB::table('groupes_matieres')->first();
+        if(!session()->exists(['groupidselect'])){
+            session(['groupidselect' => $groupes_matieresFirst->id]);
+        }
 
         //Retourne vue session
         return view('notes', ['notes' => $notes, 'groupes_matieres' => $groupes_matieres, 'groupes_eleves' => $groupes_eleves, 'eleves' => $eleves, 'examens_travaux' => $examens_travaux]);

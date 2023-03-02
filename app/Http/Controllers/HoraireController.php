@@ -11,7 +11,7 @@ class HoraireController extends Controller
 {
     public function read(){
         $periodes = DB::table('periodes')
-                            ->where('per_date', '=', '2023-02-01')
+
                             ->get();
 
         //Requete pour aller chercher les groupes/matieres
@@ -48,6 +48,9 @@ class HoraireController extends Controller
                     $heure = '3h15-5h00';
                     break;
             }
+            $groupe_matiere = DB::table('groupes_matieres')
+                            ->where('groupmat_name', '=', $request->get('groupe'.$i))
+                            ->first();
 
             $periodes = DB::table('periodes')
                             ->where('per_date', '=', session('selectdate'))
@@ -57,7 +60,7 @@ class HoraireController extends Controller
                 //Chercher les infos de l'utilisteurs
                 $periodes = new periodes();
                 $periodes->user_id = 1;//session('connexion');
-                $periodes->sess_grmat_id = 1;
+                $periodes->sess_grmat_id = $groupe_matiere->id;
                 $periodes->per_date = session('selectdate');
                 $periodes->per_heure = $heure;
                 $periodes->per_notes = $request->get('note'.$i);
@@ -65,11 +68,10 @@ class HoraireController extends Controller
                 //Requete sql pour entrer les informations
                 $res = $periodes->save();  
             }else{           
-                              print_r('test');
                 //Chercher les infos de l'utilisteurs
                 $periodes = periodes::find($periodes->id);
                 $periodes->user_id = 1;//session('connexion');
-                $periodes->sess_grmat_id = 1;
+                $periodes->sess_grmat_id = $groupe_matiere->id;
                 $periodes->per_date = session('selectdate');
                 $periodes->per_heure = $heure;
                 $periodes->per_notes = $request->get('note'.$i);
@@ -79,7 +81,7 @@ class HoraireController extends Controller
             }  
         } 
         
-        //return redirect('accueil');
+        return redirect('accueil');
     }
 
     public function ChangeDate(Request $request){
