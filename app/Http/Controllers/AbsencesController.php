@@ -13,9 +13,6 @@ class AbsencesController extends Controller
     public function read(){
         $notes = DB::table('notes')->get();
 
-            //print_r($notes);
-            //dd($notes);
-
         //Requete pour aller chercher les groupes/matieres
         $groupes_matieres = DB::table('groupes_matieres')->get();
 

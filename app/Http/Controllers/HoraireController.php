@@ -11,7 +11,6 @@ class HoraireController extends Controller
 {
     public function read(){
         $periodes = DB::table('periodes')
-
                             ->get();
 
         //Requete pour aller chercher les groupes/matieres

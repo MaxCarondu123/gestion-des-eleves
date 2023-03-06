@@ -12,7 +12,6 @@ use App\Http\Controllers\Session;
 class GroupesSessionsController extends Controller
 {
     public function update(Request $request){
-        print_r(session('groupmatrowselect'));
         if(session()->exists('groupmatrowselect')){
             //Valider les champs
             self::validerChamps($request);
